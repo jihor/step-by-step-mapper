@@ -1,9 +1,13 @@
-group 'ru.jihor.step-by-step-mapper'
+group 'ru.jihor.mapper'
 
 buildscript {
     repositories {
+        jcenter()
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
+        dependencies {
+            classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
+        }
     }
 
     dependencies {
@@ -15,11 +19,21 @@ buildscript {
 apply plugin: 'idea'
 
 subprojects {
+    buildscript {
+        repositories {
+            jcenter()
+        }
+        dependencies {
+            classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
+        }
+    }
+    apply plugin: 'maven-publish'
+    apply plugin: 'com.jfrog.bintray'
     apply plugin: 'groovy'
     apply plugin: 'idea'
     apply plugin: 'io.spring.dependency-management'
 
-    group 'ru.jihor.step-by-step-mapper'
+    group 'ru.jihor.mapper'
 
     repositories {
         mavenCentral()
