@@ -36,7 +36,7 @@ publishing {
         toMaven(MavenPublication) {
             groupId 'ru.jihor'
             artifactId 'mapper'
-            version '0.1.0'
+            version project.version
             from components.java
         }
     }
@@ -52,6 +52,9 @@ bintray {
     pkg {
         repo = 'maven'
         name = 'mapper'
+        version {
+            name = project.version
+        }
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/jihor/step-by-step-mapper.git'
     }
