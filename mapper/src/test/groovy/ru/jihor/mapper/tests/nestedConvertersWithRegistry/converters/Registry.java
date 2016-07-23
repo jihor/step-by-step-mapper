@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public enum Registry {
     INSTANCE;
 
-    private final ConverterRegistry registry = new ConverterRegistry();
+    private ConverterRegistry registry;
 
     // Java classes don't see groovy's @Delegate unless groovy classes get compiled upfront
     // so let's delegate methods manually
@@ -36,10 +36,14 @@ public enum Registry {
     private AtomicBoolean initialized = new AtomicBoolean(false);
 
     private void ensureInitialization() {
-        if (initialized.compareAndSet(false, true)) {
-            registry.add(new ClassPair<>(PersonA.class, PersonB.class), "personConverter", new PersonAToPersonBConverter());
-            registry.add(new ClassPair<>(CardA.class, CardB.class), "cardConverter", new CardAToCardBConverter());
-            registry.add(new ClassPair<>(LoanA.class, LoanB.class), "loanConverter", new LoanAToLoanBConverter());
+        while (registry == null) {
+            if (initialized.compareAndSet(false, true)) {
+                ConverterRegistry aRegistry = new ConverterRegistry();
+                aRegistry.add(new ClassPair<>(PersonA.class, PersonB.class), "personConverter", new PersonAToPersonBConverter());
+                aRegistry.add(new ClassPair<>(CardA.class, CardB.class), "cardConverter", new CardAToCardBConverter());
+                aRegistry.add(new ClassPair<>(LoanA.class, LoanB.class), "loanConverter", new LoanAToLoanBConverter());
+                this.registry = aRegistry;
+            }
         }
     }
 }
