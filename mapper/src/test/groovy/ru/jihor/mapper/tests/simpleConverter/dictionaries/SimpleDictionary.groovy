@@ -1,11 +1,11 @@
-package ru.jihor.mapper.tests.dictionaries
+package ru.jihor.mapper.tests.simpleConverter.dictionaries
 /**
  *
  *
  * @author Dmitry Zhikharev (jihor@ya.ru)
  * Created on 2016-07-01
  */
-class SampleDictionary {
+class SimpleDictionary {
     //TODO: do a scheduled update from an external web service; also maybe do an update on start
     private static def mapping = new HashMap()
     static {

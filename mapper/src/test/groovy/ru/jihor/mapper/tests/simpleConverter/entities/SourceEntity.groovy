@@ -1,4 +1,4 @@
-package ru.jihor.mapper.tests.entities
+package ru.jihor.mapper.tests.simpleConverter.entities
 
 /**
  *
