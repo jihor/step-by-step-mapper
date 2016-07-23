@@ -26,7 +26,7 @@ import spock.lang.Specification
 class NestedConvertersTest extends Specification {
 
     @Shared
-    def registry = Registry.INSTANCE.getRegistry()
+    def registry = Registry.INSTANCE
 
     PersonA personA = new PersonA(lastname: "Smith",
             firstname: "John",

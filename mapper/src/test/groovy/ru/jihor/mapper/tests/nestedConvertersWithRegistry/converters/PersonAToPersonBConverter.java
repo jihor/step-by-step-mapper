@@ -2,6 +2,7 @@ package ru.jihor.mapper.tests.nestedConvertersWithRegistry.converters;
 
 import ru.jihor.mapper.base.Converter;
 import ru.jihor.mapper.base.DelegatingConverter;
+import ru.jihor.mapper.registry.ConverterRegistry;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.CardA;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.LoanA;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.PersonA;
@@ -16,6 +17,9 @@ import java.util.stream.Collectors;
  *         Created on 22.07.2016
  */
 public class PersonAToPersonBConverter extends DelegatingConverter<PersonA, PersonB> {
+
+    private Registry registry = Registry.INSTANCE;
+
     @Override
     protected Converter<PersonA, PersonB> configureDelegate() {
         return Converter
@@ -30,17 +34,17 @@ public class PersonAToPersonBConverter extends DelegatingConverter<PersonA, Pers
                       (a, b) -> b.setCards(a.getCards()
                                             .stream() // parallelStream can also be used
                                             .map((cardA) ->
-                                                         Registry.INSTANCE.getRegistry().getDefaultConverter(CardA.class,
-                                                                                               CardB.class)
-                                                                          .convert(cardA, CardB::new))
+                                                         registry.getDefaultConverter(CardA.class,
+                                                                                      CardB.class)
+                                                                 .convert(cardA, CardB::new))
                                             .toArray(CardB[]::new)))
                 .step("Copy loans",
                       (a, b) -> b.setLoans(a.getLoans()
                                             .parallelStream()
                                             .map((loanA) ->
-                                                         Registry.INSTANCE.getRegistry().getDefaultConverter(LoanA.class,
-                                                                                               LoanB.class)
-                                                                          .convert(loanA, LoanB::new))
+                                                         registry.getDefaultConverter(LoanA.class,
+                                                                                      LoanB.class)
+                                                                 .convert(loanA, LoanB::new))
                                             .toArray(LoanB[]::new)))
                 .end()
                 .build();

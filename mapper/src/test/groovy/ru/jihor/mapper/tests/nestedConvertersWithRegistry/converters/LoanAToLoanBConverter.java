@@ -13,6 +13,9 @@ import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemB.Money
  *         Created on 23.07.2016
  */
 public class LoanAToLoanBConverter extends DelegatingConverter<LoanA, LoanB> {
+
+    private Registry registry = Registry.INSTANCE;
+
     @Override protected Converter<LoanA, LoanB> configureDelegate() {
         return Converter
                 .<LoanA, LoanB>builder()
@@ -21,8 +24,8 @@ public class LoanAToLoanBConverter extends DelegatingConverter<LoanA, LoanB> {
                 .step("Copy loan term", (a, b) -> b.setLoanTermInMonths(a.getLoanTermInMonths()))
                 .step("Copy loan issue date", (a, b) -> b.setLoanIssueDate(a.getLoanIssueDate()))
                 .step("Copy credit card data",
-                      (a, b) -> b.setAttachedCreditCard(Registry.INSTANCE.getRegistry().getDefaultConverter(CardA.class, CardB.class)
-                                                                         .convert(a.getAttachedCreditCard(), CardB::new)))
+                      (a, b) -> b.setAttachedCreditCard(registry.getDefaultConverter(CardA.class, CardB.class)
+                                                                .convert(a.getAttachedCreditCard(), CardB::new)))
                 .end()
                 .build();
     }
