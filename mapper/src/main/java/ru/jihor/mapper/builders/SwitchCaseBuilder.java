@@ -1,4 +1,7 @@
-package ru.jihor.mapper;
+package ru.jihor.mapper.builders;
+
+import ru.jihor.mapper.steps.SwitchCaseStep;
+import ru.jihor.mapper.base.Pipeline;
 
 import java.util.function.Predicate;
 
@@ -15,13 +18,13 @@ public class SwitchCaseBuilder<P extends PipelineBuilder, S, T> extends Abstract
 
     private Predicate<S> currentCondition;
 
-    protected SwitchCaseBuilder(P parent, String id) {
+    public SwitchCaseBuilder(P parent, String id) {
         super(parent);
         this.id = id;
     }
 
     @Override
-    protected void accept(Pipeline pipeline) {
+    public void accept(Pipeline pipeline) {
         step.addCase(currentCondition, pipeline);
     }
 

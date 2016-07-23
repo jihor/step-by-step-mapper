@@ -1,4 +1,6 @@
-package ru.jihor.mapper;
+package ru.jihor.mapper.builders;
+
+import ru.jihor.mapper.base.Pipeline;
 
 /**
  *
@@ -9,7 +11,7 @@ package ru.jihor.mapper;
 public abstract class AbstractConverterBuilder<P extends AbstractConverterBuilder, S, T> {
     private final P parent;
 
-    protected AbstractConverterBuilder(P parent) {
+    public AbstractConverterBuilder(P parent) {
         this.parent = parent;
     }
 
@@ -17,5 +19,5 @@ public abstract class AbstractConverterBuilder<P extends AbstractConverterBuilde
         return parent;
     }
 
-    protected abstract void accept(Pipeline pipeline);
+    public abstract void accept(Pipeline pipeline);
 }

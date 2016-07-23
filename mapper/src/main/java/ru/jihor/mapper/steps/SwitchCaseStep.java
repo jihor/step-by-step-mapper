@@ -1,8 +1,11 @@
-package ru.jihor.mapper;
+package ru.jihor.mapper.steps;
 
 import java.util.LinkedHashMap;
 import java.util.function.Predicate;
 import lombok.extern.slf4j.Slf4j;
+import ru.jihor.mapper.base.Pipeline;
+import ru.jihor.mapper.base.Step;
+import ru.jihor.mapper.base.Visitor;
 
 /**
  *
@@ -14,11 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 public class SwitchCaseStep<S, T> extends Step {
     private final LinkedHashMap<Predicate<S>, Pipeline> cases = new LinkedHashMap<>();
 
-    protected LinkedHashMap<Predicate<S>, Pipeline> getCases() {
+    public LinkedHashMap<Predicate<S>, Pipeline> getCases() {
         return cases;
     }
 
-    protected void addCase(Predicate<S> condition, Pipeline pipeline) {
+    public void addCase(Predicate<S> condition, Pipeline pipeline) {
         log.debug("Registering case # " + (cases.size() + 1));
         if (cases.containsKey(condition)) {
             throw new IllegalArgumentException("Duplicate condition in SwitchCase statement");
@@ -27,7 +30,7 @@ public class SwitchCaseStep<S, T> extends Step {
     }
 
     @Override
-    protected void accept(Visitor v) {
+    public void accept(Visitor v) {
         v.visit(this);
     }
 }

@@ -1,6 +1,12 @@
-package ru.jihor.mapper;
+package ru.jihor.mapper.builders;
+
+import ru.jihor.mapper.steps.CheckingTransformationStep;
+import ru.jihor.mapper.steps.TransformationStep;
+import ru.jihor.mapper.base.Pipeline;
+import ru.jihor.mapper.base.Step;
 
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  *
@@ -15,25 +21,31 @@ public class PipelineBuilder<P extends AbstractConverterBuilder, S, T> extends A
         return pipeline;
     }
 
-    protected PipelineBuilder () {
+    public PipelineBuilder () {
         super(null);
     }
-    protected PipelineBuilder (P parent) {
+    public PipelineBuilder (P parent) {
         super(parent);
     }
 
     @Override
-    protected void accept(Pipeline pipeline) {
+    public void accept(Pipeline pipeline) {
         throw new UnsupportedOperationException("Pipeline builder doesn't support nested pipelines");
     }
 
-    protected PipelineBuilder<P, S, T> step(String id, Step step) {
+    public PipelineBuilder<P, S, T> step(String id, Step step) {
         pipeline.add(id, step);
         return this;
     }
 
     public PipelineBuilder<P, S, T> step(String id, BiConsumer<S, T> transformation) {
         pipeline.add(id, new TransformationStep<>(transformation));
+        return this;
+    }
+
+    // check is considered failed if function returns anything but null
+    public PipelineBuilder<P, S, T> step(String id, Function<S, String> check, BiConsumer<S, T> transformation) {
+        pipeline.add(id, new CheckingTransformationStep<>(check, transformation));
         return this;
     }
 

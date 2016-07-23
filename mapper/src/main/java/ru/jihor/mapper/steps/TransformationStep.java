@@ -1,4 +1,7 @@
-package ru.jihor.mapper;
+package ru.jihor.mapper.steps;
+
+import ru.jihor.mapper.base.Step;
+import ru.jihor.mapper.base.Visitor;
 
 import java.util.function.BiConsumer;
 
@@ -11,16 +14,16 @@ import java.util.function.BiConsumer;
 public class TransformationStep<S, T> extends Step {
     private BiConsumer<S, T> transformation;
 
-    protected TransformationStep(BiConsumer<S, T> transformation) {
+    public TransformationStep(BiConsumer<S, T> transformation) {
         this.transformation = transformation;
     }
 
-    protected BiConsumer<S, T> getTransformation() {
+    public BiConsumer<S, T> getTransformation() {
         return transformation;
     }
 
     @Override
-    protected void accept(Visitor v) {
+    public void accept(Visitor v) {
         v.visit(this);
     }
 }

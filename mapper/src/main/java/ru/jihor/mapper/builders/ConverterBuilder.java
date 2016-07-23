@@ -1,7 +1,8 @@
-package ru.jihor.mapper;
+package ru.jihor.mapper.builders;
 
 import java.util.function.Supplier;
 import lombok.extern.slf4j.Slf4j;
+import ru.jihor.mapper.base.Converter;
 
 /**
  *
@@ -14,7 +15,7 @@ public class ConverterBuilder<S, T> extends PipelineBuilder<ConverterBuilder<S, 
 
     private Converter<S, T> converter;
 
-    protected ConverterBuilder(Converter<S, T> converter) {
+    public ConverterBuilder(Converter<S, T> converter) {
         super();
         this.converter = converter;
     }

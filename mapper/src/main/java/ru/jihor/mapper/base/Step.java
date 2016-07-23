@@ -1,4 +1,4 @@
-package ru.jihor.mapper;
+package ru.jihor.mapper.base;
 
 /**
  *
@@ -7,5 +7,5 @@ package ru.jihor.mapper;
  * Created on 2016-07-01
  */
 public abstract class Step {
-    protected abstract void accept(Visitor v);
+    public abstract void accept(Visitor v);
 }

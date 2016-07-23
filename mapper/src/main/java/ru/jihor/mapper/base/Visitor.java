@@ -1,9 +1,13 @@
-package ru.jihor.mapper;
+package ru.jihor.mapper.base;
 
 import java.text.MessageFormat;
 import java.util.Map;
 import java.util.function.Predicate;
 import lombok.extern.slf4j.Slf4j;
+import ru.jihor.mapper.exceptions.CheckException;
+import ru.jihor.mapper.steps.CheckingTransformationStep;
+import ru.jihor.mapper.steps.SwitchCaseStep;
+import ru.jihor.mapper.steps.TransformationStep;
 import ru.jihor.mapper.exceptions.TransformationException;
 
 /**
@@ -25,6 +29,14 @@ public class Visitor<S, T> {
 
     public void visit(TransformationStep<S, T> step) {
         step.getTransformation().accept(source, target);
+    }
+
+    public void visit(CheckingTransformationStep<S, T> step) {
+        String checkResult = step.getCheck().apply(source);
+        if (checkResult != null){
+            throw new CheckException(checkResult);
+        }
+        visit((TransformationStep<S, T>) step);
     }
 
     public void visit(SwitchCaseStep<S, T> step) {

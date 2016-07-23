@@ -1,4 +1,6 @@
-package ru.jihor.mapper;
+package ru.jihor.mapper.base;
+
+import java.util.function.Supplier;
 
 /**
  *
@@ -10,7 +12,7 @@ public abstract class DelegatingConverter<S, T> extends Converter<S, T> {
 
     private Converter<S, T> delegate;
 
-    protected Converter<S, T> getDelegate() {
+    public Converter<S, T> getDelegate() {
         return delegate;
     };
 
@@ -26,7 +28,7 @@ public abstract class DelegatingConverter<S, T> extends Converter<S, T> {
     }
 
     @Override
-    public T convert(S source, T initializedTarget) {
+    public T convert(S source, Supplier<T> initializedTarget) {
         return getDelegate().convert(source, initializedTarget);
     }
 }

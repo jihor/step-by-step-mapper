@@ -1,4 +1,4 @@
-package ru.jihor.mapper;
+package ru.jihor.mapper.base;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -15,11 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 public class Pipeline {
     private final LinkedHashMap<String, Step> steps = new LinkedHashMap<>();
 
-    protected LinkedHashMap<String, Step> getSteps() {
+    public LinkedHashMap<String, Step> getSteps() {
         return steps;
     }
 
-    protected void add(String id, Step step) {
+    public void add(String id, Step step) {
         log.debug("Registering transformation step [{}]", id);
         if (steps.containsKey(id)) {
             throw new IllegalArgumentException(MessageFormat.format(
