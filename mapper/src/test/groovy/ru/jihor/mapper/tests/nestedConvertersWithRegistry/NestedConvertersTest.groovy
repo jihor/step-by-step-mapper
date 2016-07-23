@@ -3,16 +3,12 @@ package ru.jihor.mapper.tests.nestedConvertersWithRegistry
 import groovy.util.logging.Slf4j
 import ru.jihor.mapper.exceptions.TransformationException
 import ru.jihor.mapper.registry.ConverterRegistry
-import ru.jihor.mapper.tests.nestedConvertersWithRegistry.converters.Registry
+
+import ru.jihor.mapper.tests.nestedConvertersWithRegistry.converters.DemoConverterRegistry
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.CardA
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.LoanA
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.PersonA
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemB.PersonB
-import ru.jihor.mapper.tests.simpleConverter.converters.SimpleConverter
-import ru.jihor.mapper.tests.simpleConverter.dictionaries.SimpleDictionary
-import ru.jihor.mapper.tests.simpleConverter.entities.BusinessSection
-import ru.jihor.mapper.tests.simpleConverter.entities.SampleSource
-import ru.jihor.mapper.tests.simpleConverter.entities.TechSection
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -26,7 +22,7 @@ import spock.lang.Specification
 class NestedConvertersTest extends Specification {
 
     @Shared
-    def registry = Registry.INSTANCE
+    private ConverterRegistry registry = DemoConverterRegistry.getInstance();
 
     PersonA personA = new PersonA(lastname: "Smith",
             firstname: "John",

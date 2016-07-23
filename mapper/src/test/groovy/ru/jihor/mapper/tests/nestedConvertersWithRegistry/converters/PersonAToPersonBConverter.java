@@ -10,15 +10,13 @@ import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemB.CardB
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemB.LoanB;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemB.PersonB;
 
-import java.util.stream.Collectors;
-
 /**
  * @author Dmitry Zhikharev (jihor@ya.ru)
  *         Created on 22.07.2016
  */
 public class PersonAToPersonBConverter extends DelegatingConverter<PersonA, PersonB> {
 
-    private Registry registry = Registry.INSTANCE;
+    private ConverterRegistry registry = DemoConverterRegistry.getInstance();
 
     @Override
     protected Converter<PersonA, PersonB> configureDelegate() {

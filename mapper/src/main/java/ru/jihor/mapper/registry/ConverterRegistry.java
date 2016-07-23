@@ -5,6 +5,7 @@ import ru.jihor.mapper.base.Converter;
 import java.text.MessageFormat;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Dmitry Zhikharev (jihor@ya.ru)
