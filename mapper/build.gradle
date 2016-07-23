@@ -23,6 +23,10 @@ dependencies {
         "org.springframework:spring-test"*/
 
     testCompile "org.spockframework:spock-core",
+            "org.spockframework:spock-spring",
+            "org.springframework:spring-test",
+            "org.springframework:spring-context",
             "org.codehaus.groovy:groovy-all",
-            "ch.qos.logback:logback-classic:1.1.7"
+            "ch.qos.logback:logback-classic:1.1.7",
+            "org.slf4j:jcl-over-slf4j"
 }

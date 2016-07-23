@@ -27,7 +27,7 @@ subprojects {
 
     dependencyManagement {
         imports {
-            mavenBom "io.spring.platform:platform-bom:2.0.5.RELEASE"
+            mavenBom "io.spring.platform:platform-bom:2.0.6.RELEASE"
         }
         dependencies {
             dependency "ch.qos.logback:logback-classic:1.1.7"
