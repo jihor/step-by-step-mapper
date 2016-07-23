@@ -25,9 +25,9 @@ public abstract class DelegatingConverterRegistry extends ConverterRegistry {
     }
 
     @Override
-    public <S, T> Converter<S, T> getConverterByName(S source, T target, String converterName) {
+    public <S, T> Converter<S, T> getConverterByName(Class<S> sourceClass, Class<T> targetClass, String converterName) {
         ensureInitialization();
-        return delegate.getConverterByName(source, target, converterName);
+        return delegate.getConverterByName(sourceClass, targetClass, converterName);
     }
 
     private AtomicBoolean initialized = new AtomicBoolean(false);
