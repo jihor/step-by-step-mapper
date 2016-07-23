@@ -2,7 +2,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile "org.projectlombok:lombok",
+    compileOnly "org.projectlombok:lombok",
             "org.slf4j:slf4j-api"
 /*        "com.fasterxml.jackson.core:jackson-annotations",
         "com.fasterxml.jackson.core:jackson-databind",
@@ -43,12 +43,12 @@ publishing {
 }
 
 bintray {
-    bintray {
-        user = property('user')
-        key = property('key')
-    }
+    user =  project.hasProperty("user") ? project.property("user") : "fake"
+    key = project.hasProperty("key") ? project.property("key") : "fake"
+
     publications = ['toMaven']
     publish = true
+
     pkg {
         repo = 'maven'
         name = 'mapper'
