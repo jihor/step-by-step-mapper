@@ -84,4 +84,11 @@ class NestedConvertersTest extends Specification {
         te.getStep() == "[Copy credit cards] -> [Copy validity date]"
         te.getLocalizedMessage() == "Step [Copy validity date] failed with CheckException: Expected MM/YYYY format, found [12347/019]"
     }
+
+    //TODO: test: add a default converter dynamically then use it
+    //TODO: test: add a named converter dynamically then use it
+    //TODO: test: try to add a duplicate converter
+    //TODO: test: try to get default converter when it doent's exist
+    //TODO: test: try to get named converter when it doent's exist
+    //TODO: test: try to get default converter when there are multiple ones
 }
