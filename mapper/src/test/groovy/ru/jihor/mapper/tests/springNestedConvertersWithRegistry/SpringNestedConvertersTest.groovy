@@ -26,7 +26,51 @@ class SpringNestedConvertersTest extends Specification {
     @Autowired
     private ConverterRegistry registry;
 
-    PersonA personA = new PersonA(lastname: "Smith",
+    PersonA janeDoe = new PersonA(lastname: "Doe",
+            firstname: "Jane",
+            middlename: "Michael",
+            debitCards: [
+                    new DebitCardA(number: 1144556688779944,
+                            holderName: "Jane Doe",
+                            validThru: "12/2019"),
+                    new DebitCardA(number: 6540654065406644,
+                            holderName: "Jane M Doe",
+                            validThru: "09/2018"),
+                    new DebitCardA(number: 7890789078999999,
+                            holderName: "Jane M. Doe",
+                            validThru: "05/2017"),
+            ],
+            creditCards: [
+                    new CreditCardA(number: 5522445522445588,
+                            holderName: "Jane Doe",
+                            validThru: "12/2019",
+                            creditLimit: BigDecimal.valueOf(10_000D)),
+                    new CreditCardA(number: 6644664466446644,
+                            holderName: "Jane M Doe",
+                            validThru: "09/2018",
+                            creditLimit: BigDecimal.valueOf(100_000D)),
+                    new CreditCardA(number: 6655444488887777,
+                            holderName: "Jane M. Doe",
+                            validThru: "05/2017",
+                            creditLimit: BigDecimal.valueOf(1_000_000D))
+            ],
+            loans: [
+                    new LoanA(loanAmount: 1_000_000,
+                            loanIssueDate: new Date().parse("dd.MM.yyy", '11.02.1994'),
+                            loanTermInMonths: 1188,
+                            attachedCard: new CreditCardA(number: 7777444455551111,
+                                    holderName: "Jane Doe",
+                                    validThru: "11/2018")),
+                    new LoanA(loanAmount: 60_000,
+                            loanIssueDate: new Date().parse("dd.MM.yyy", '26.08.2012'),
+                            loanTermInMonths: 72,
+                            attachedCard: new CreditCardA(number: 1123445677894456,
+                                    holderName: "John A. Smith",
+                                    validThru: "08/2019"))
+            ]
+    )
+
+    PersonA johnSmith = new PersonA(lastname: "Smith",
             firstname: "John",
             middlename: "Dewey",
             debitCards: [
@@ -67,7 +111,8 @@ class SpringNestedConvertersTest extends Specification {
                             attachedCard: new CreditCardA(number: 6578243566448211,
                                     holderName: "John A. Smith",
                                     validThru: "08/2019"))
-            ]
+            ],
+            mainGuarantor: janeDoe
     )
 
     def "Test valid mapping"() {
@@ -75,7 +120,7 @@ class SpringNestedConvertersTest extends Specification {
         setup: "Source data is valid"
 
         when: "Map to targetClass"
-        PersonB personB = registry.getDefaultConverter(PersonA.class, PersonB.class).convert(personA)
+        PersonB personB = registry.getDefaultConverter(PersonA.class, PersonB.class).convert(johnSmith)
 
         then: "No exceptions, valid data in targetClass"
         // TODO: write full check
@@ -85,7 +130,7 @@ class SpringNestedConvertersTest extends Specification {
     def "Test wrong data mapping"() {
 
         setup: "Source data is invalid"
-        personA.creditCards =
+        johnSmith.creditCards =
                 [
                         new CreditCardA(number: 8888444422221111,
                                 holderName: "John Smith",
@@ -93,7 +138,7 @@ class SpringNestedConvertersTest extends Specification {
                 ]
 
         when: "Map to targetClass"
-        PersonB personB = registry.getDefaultConverter(PersonA.class, PersonB.class).convert(personA)
+        PersonB personB = registry.getDefaultConverter(PersonA.class, PersonB.class).convert(johnSmith)
 
         then: "Exception is thrown"
         def te = thrown(TransformationException)

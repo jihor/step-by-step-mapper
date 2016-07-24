@@ -17,6 +17,7 @@ import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemB
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemB.PersonB;
 
 import java.math.BigInteger;
+import java.util.stream.Collectors;
 
 /**
  * @author Dmitry Zhikharev (jihor@ya.ru)
@@ -40,24 +41,23 @@ public class TestConfiguration {
                                             .map((cardA) ->
                                                          registry().getDefaultConverter(CardA.class,
                                                                                         CardB.class)
-                                                                   .convert(cardA, CardB::new))
-                                            .toArray(CardB[]::new)))
+                                                                   .convert(cardA, CardB::new)).collect(Collectors.toSet())))
                 .step("Copy credit cards",
-                      (a, b) -> b.setCards(a.getCreditCards()
-                                            .stream() // parallelStream can also be used
-                                            .map((cardA) ->
-                                                         registry().getDefaultConverter(CardA.class,
-                                                                                        CardB.class)
-                                                                   .convert(cardA, CardB::new))
-                                            .toArray(CardB[]::new)))
+                      (a, b) -> b.getCards().addAll(a.getCreditCards()
+                                                     .stream() // parallelStream can also be used
+                                                     .map((cardA) ->
+                                                                  registry().getDefaultConverter(CardA.class,
+                                                                                                 CardB.class)
+                                                                            .convert(cardA, CardB::new)).collect(Collectors.toSet())))
                 .step("Copy loans",
                       (a, b) -> b.setLoans(a.getLoans()
                                             .parallelStream()
                                             .map((loanA) ->
                                                          registry().getDefaultConverter(LoanA.class,
                                                                                         LoanB.class)
-                                                                   .convert(loanA, LoanB::new))
-                                            .toArray(LoanB[]::new)))
+                                                                   .convert(loanA, LoanB::new)).collect(Collectors.toSet())))
+                .step("Copy guarantor",
+                      (a, b) -> b.setMainGuarantor(a.getMainGuarantor() != null ? personConverter().convert(a.getMainGuarantor()) : null)) //add some recursion
                 .end()
                 .build();
     }
@@ -67,7 +67,10 @@ public class TestConfiguration {
         return Converter.<CardA, CardB>builder()
                 .initializeTarget(CardB::new)
                 .step("Copy card number", (a, b) -> b.setCardNumber(new BigInteger(a.getNumber())))
-                .step("Copy validity date", (a) -> !(a.getValidThru().matches("\\d{2}/\\d{4}")) ? "Expected MM/YYYY format, found [" + a.getValidThru() + "]" : null,
+                .step("Copy validity date",
+                      (a) -> !(a.getValidThru().matches("\\d{2}/\\d{4}")) ?
+                              "Expected MM/YYYY format, found [" + a.getValidThru() + "]" :
+                              null,
                       (a, b) -> {
                           b.setValidThruYear(Integer.valueOf(a.getValidThru().substring(3)));
                           b.setValidThruMonth(Integer.valueOf(a.getValidThru().substring(0, 2)));

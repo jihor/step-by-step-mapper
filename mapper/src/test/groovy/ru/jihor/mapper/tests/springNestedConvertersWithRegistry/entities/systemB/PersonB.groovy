@@ -9,6 +9,7 @@ class PersonB {
     String lastName
     String firstName
     String middleName
-    ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemB.CardB[] cards
-    ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemB.LoanB[] loans
+    Set<CardB> cards
+    Set<LoanB> loans
+    PersonB mainGuarantor // imagine every person with debts has a main guarantor for all the debts
 }

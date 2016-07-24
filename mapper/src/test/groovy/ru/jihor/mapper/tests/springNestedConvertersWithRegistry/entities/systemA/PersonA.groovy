@@ -13,4 +13,5 @@ class PersonA {
     Set<DebitCardA> debitCards
     Set<CreditCardA> creditCards
     List<LoanA> loans
+    PersonA mainGuarantor // imagine every person with debts has a main guarantor for all the debts
 }
