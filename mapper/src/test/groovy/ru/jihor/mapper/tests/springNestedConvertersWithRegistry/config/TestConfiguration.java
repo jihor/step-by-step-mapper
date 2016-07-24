@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.jihor.mapper.registry.ClassPair;
 import ru.jihor.mapper.registry.ConverterRegistry;
-import ru.jihor.mapper.registry.DelegatingConverterRegistry;
+import ru.jihor.mapper.registry.ConfigurableConverterRegistry;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.converters.CardAToCardBConverter;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.converters.DemoCurrencyDictionary;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.converters.LoanAToLoanBConverter;
@@ -44,9 +44,9 @@ public class TestConfiguration {
 
     @Bean
     public ConverterRegistry registry() {
-        return new DelegatingConverterRegistry() {
+        return new ConfigurableConverterRegistry() {
             @Override
-            protected void initializeRegistry(ConverterRegistry aRegistry) {
+            protected void configureRegistry(ConverterRegistry aRegistry) {
                 aRegistry.add(new ClassPair<>(PersonA.class, PersonB.class), "personConverter", personConverter());
                 aRegistry.add(new ClassPair<>(CardA.class, CardB.class), "cardConverter", cardConverter());
                 aRegistry.add(new ClassPair<>(LoanA.class, LoanB.class), "loanConverter", loanConverter());

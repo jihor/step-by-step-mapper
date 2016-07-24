@@ -11,9 +11,17 @@ import java.util.concurrent.ConcurrentMap;
  *         Created on 22.07.2016
  */
 public class ConverterRegistry {
+    protected ConcurrentMap<ClassPair, ConcurrentMap<String, Converter>> getRegistry() {
+        return registry;
+    }
+
+    protected void setRegistry(ConcurrentMap<ClassPair, ConcurrentMap<String, Converter>> registry) {
+        this.registry = registry;
+    }
+
     private ConcurrentMap<ClassPair, ConcurrentMap<String, Converter>> registry = new ConcurrentHashMap<>();
 
-    public <S, T> void add(ClassPair<S, T> classPair, String converterName, Converter<S, T> converter) {
+    public <S, T> void add(ClassPair<S, T> classPair, String converterName, Converter<? super S, ? super T> converter) {
 
         /*
         * If no map of converters exists for this class pair, then create new map.

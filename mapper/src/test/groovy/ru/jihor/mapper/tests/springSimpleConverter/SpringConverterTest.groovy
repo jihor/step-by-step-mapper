@@ -3,14 +3,15 @@ package ru.jihor.mapper.tests.springSimpleConverter
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
+import ru.jihor.mapper.base.Converter
 import ru.jihor.mapper.exceptions.TransformationException
 import ru.jihor.mapper.tests.springSimpleConverter.config.TestConfiguration
-import ru.jihor.mapper.tests.springSimpleConverter.converters.SimpleConverter
+
 import ru.jihor.mapper.tests.springSimpleConverter.dictionaries.SimpleDictionary
 import ru.jihor.mapper.tests.springSimpleConverter.entities.BusinessSection
 import ru.jihor.mapper.tests.springSimpleConverter.entities.SampleSource
+import ru.jihor.mapper.tests.springSimpleConverter.entities.SampleTarget
 import ru.jihor.mapper.tests.springSimpleConverter.entities.TechSection
-import spock.lang.Shared
 import spock.lang.Specification
 
 /**
@@ -24,7 +25,7 @@ import spock.lang.Specification
 class SpringConverterTest extends Specification {
 
     @Autowired
-    SimpleConverter converter
+    Converter<SampleSource, SampleTarget> converter
 
     @Autowired
     SimpleDictionary dictionary

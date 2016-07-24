@@ -22,7 +22,8 @@ dependencies {
         "org.springframework.boot:spring-boot-starter-ws",
         "org.springframework:spring-test"*/
 
-    testCompile "org.spockframework:spock-core",
+    testCompile "org.projectlombok:lombok",
+            "org.spockframework:spock-core",
             "org.spockframework:spock-spring",
             "org.springframework:spring-test",
             "org.springframework:spring-context",
