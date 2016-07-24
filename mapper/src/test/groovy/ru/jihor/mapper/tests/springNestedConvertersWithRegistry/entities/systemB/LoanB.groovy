@@ -9,5 +9,5 @@ class LoanB {
     Money loanAmount
     Long loanTermInMonths
     Date loanIssueDate
-    CardB attachedCreditCard
+    CardB attachedCard
 }

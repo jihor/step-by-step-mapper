@@ -2,19 +2,21 @@ package ru.jihor.mapper.tests.springNestedConvertersWithRegistry.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ru.jihor.mapper.base.Converter;
 import ru.jihor.mapper.registry.ClassPair;
 import ru.jihor.mapper.registry.ConverterRegistry;
 import ru.jihor.mapper.registry.ConfigurableConverterRegistry;
-import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.converters.CardAToCardBConverter;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.converters.DemoCurrencyDictionary;
-import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.converters.LoanAToLoanBConverter;
-import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.converters.PersonAToPersonBConverter;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.CardA;
+import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.DebitCardA;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.LoanA;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.PersonA;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemB.CardB;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemB.LoanB;
+import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemB.Money;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemB.PersonB;
+
+import java.math.BigInteger;
 
 /**
  * @author Dmitry Zhikharev (jihor@ya.ru)
@@ -23,18 +25,71 @@ import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemB
 @Configuration
 public class TestConfiguration {
     @Bean
-    public PersonAToPersonBConverter personConverter() {
-        return new PersonAToPersonBConverter();
+    public Converter<PersonA, PersonB> personConverter() {
+        return Converter
+                .<PersonA, PersonB>builder()
+                .initializeTarget(PersonB::new)
+                .step("Copy full name", (a, b) -> {
+                    b.setFirstName(a.getFirstname());
+                    b.setLastName(a.getLastname());
+                    b.setMiddleName(a.getMiddlename());
+                })
+                .step("Copy debit cards",
+                      (a, b) -> b.setCards(a.getDebitCards()
+                                            .stream() // parallelStream can also be used
+                                            .map((cardA) ->
+                                                         registry().getDefaultConverter(CardA.class,
+                                                                                        CardB.class)
+                                                                   .convert(cardA, CardB::new))
+                                            .toArray(CardB[]::new)))
+                .step("Copy credit cards",
+                      (a, b) -> b.setCards(a.getCreditCards()
+                                            .stream() // parallelStream can also be used
+                                            .map((cardA) ->
+                                                         registry().getDefaultConverter(CardA.class,
+                                                                                        CardB.class)
+                                                                   .convert(cardA, CardB::new))
+                                            .toArray(CardB[]::new)))
+                .step("Copy loans",
+                      (a, b) -> b.setLoans(a.getLoans()
+                                            .parallelStream()
+                                            .map((loanA) ->
+                                                         registry().getDefaultConverter(LoanA.class,
+                                                                                        LoanB.class)
+                                                                   .convert(loanA, LoanB::new))
+                                            .toArray(LoanB[]::new)))
+                .end()
+                .build();
     }
 
     @Bean
-    public CardAToCardBConverter cardConverter() {
-        return new CardAToCardBConverter();
+    public Converter<CardA, CardB> cardConverter() {
+        return Converter.<CardA, CardB>builder()
+                .initializeTarget(CardB::new)
+                .step("Copy card number", (a, b) -> b.setCardNumber(new BigInteger(a.getNumber())))
+                .step("Copy validity date", (a) -> !(a.getValidThru().matches("\\d{2}/\\d{4}")) ? "Expected MM/YYYY format, found [" + a.getValidThru() + "]" : null,
+                      (a, b) -> {
+                          b.setValidThruYear(Integer.valueOf(a.getValidThru().substring(3)));
+                          b.setValidThruMonth(Integer.valueOf(a.getValidThru().substring(0, 2)));
+                      })
+                .step("Copy cardholder name", (a, b) -> b.setCardholderName(a.getHolderName()))
+                .end()
+                .build();
     }
 
     @Bean
-    public LoanAToLoanBConverter loanConverter() {
-        return new LoanAToLoanBConverter();
+    public Converter<LoanA, LoanB> loanConverter() {
+        return Converter
+                .<LoanA, LoanB>builder()
+                .initializeTarget(LoanB::new)
+                .step("Copy loan amount", (a, b) -> b.setLoanAmount(new Money(a.getLoanAmount(), dictionary().getCurrencyCode())))
+                .step("Copy loan term", (a, b) -> b.setLoanTermInMonths(a.getLoanTermInMonths()))
+                .step("Copy loan issue date", (a, b) -> b.setLoanIssueDate(a.getLoanIssueDate()))
+                .step("Copy credit card data",
+                      (a, b) -> b.setAttachedCard(registry().getDefaultConverter(CardA.class, CardB.class)
+                                                            .convert(a.getAttachedCard(), CardB::new)))
+                .end()
+                .build();
     }
 
     @Bean

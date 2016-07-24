@@ -9,5 +9,5 @@ class LoanA {
     BigDecimal loanAmount
     Long loanTermInMonths
     Date loanIssueDate
-    ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.CardA attachedCreditCard
+    CardA attachedCard //may be either credit or debit
 }

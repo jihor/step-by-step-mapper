@@ -6,11 +6,11 @@ import org.springframework.test.context.ContextConfiguration
 import ru.jihor.mapper.exceptions.TransformationException
 import ru.jihor.mapper.registry.ConverterRegistry
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.config.TestConfiguration
-import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.CardA
+import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.CreditCardA
+import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.DebitCardA
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.LoanA
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.PersonA
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemB.PersonB
-import spock.lang.Shared
 import spock.lang.Specification
 
 /**
@@ -29,28 +29,42 @@ class SpringNestedConvertersTest extends Specification {
     PersonA personA = new PersonA(lastname: "Smith",
             firstname: "John",
             middlename: "Dewey",
-            cards: [
-                    new CardA(number: 8888444422221111,
+            debitCards: [
+                    new DebitCardA(number: 6644885533221155,
                             holderName: "John Smith",
                             validThru: "12/2019"),
-                    new CardA(number: 1122334455667788,
+                    new DebitCardA(number: 1234654332153215,
                             holderName: "John D Smith",
                             validThru: "09/2018"),
-                    new CardA(number: 1234123412341234,
+                    new DebitCardA(number: 9870987098709999,
                             holderName: "John D. Smith",
                             validThru: "05/2017"),
+            ],
+            creditCards: [
+                    new CreditCardA(number: 8888444422221111,
+                            holderName: "John Smith",
+                            validThru: "12/2019",
+                            creditLimit: BigDecimal.valueOf(10_000D)),
+                    new CreditCardA(number: 1122334455667788,
+                            holderName: "John D Smith",
+                            validThru: "09/2018",
+                            creditLimit: BigDecimal.valueOf(100_000D)),
+                    new CreditCardA(number: 1234123412341234,
+                            holderName: "John D. Smith",
+                            validThru: "05/2017",
+                            creditLimit: BigDecimal.valueOf(1_000_000D))
             ],
             loans: [
                     new LoanA(loanAmount: 1_000_000,
                             loanIssueDate: new Date().parse("dd.MM.yyy", '11.02.1994'),
                             loanTermInMonths: 1188,
-                            attachedCreditCard: new CardA(number: 7714654835121024,
+                            attachedCard: new CreditCardA(number: 7714654835121024,
                                     holderName: "John Smith",
                                     validThru: "11/2018")),
                     new LoanA(loanAmount: 60_000,
                             loanIssueDate: new Date().parse("dd.MM.yyy", '26.08.2012'),
                             loanTermInMonths: 72,
-                            attachedCreditCard: new CardA(number: 6578243566448211,
+                            attachedCard: new CreditCardA(number: 6578243566448211,
                                     holderName: "John A. Smith",
                                     validThru: "08/2019"))
             ]
@@ -71,9 +85,9 @@ class SpringNestedConvertersTest extends Specification {
     def "Test wrong data mapping"() {
 
         setup: "Source data is invalid"
-        personA.cards =
+        personA.creditCards =
                 [
-                        new CardA(number: 8888444422221111,
+                        new CreditCardA(number: 8888444422221111,
                                 holderName: "John Smith",
                                 validThru: "12347/019")        // <-- invalid credit card validity date
                 ]

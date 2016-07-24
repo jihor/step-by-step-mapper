@@ -28,7 +28,7 @@ public class PersonAToPersonBConverter extends DelegatingConverter<PersonA, Pers
                     b.setLastName(a.getLastname());
                     b.setMiddleName(a.getMiddlename());
                 })
-                .step("Copy credit cards",
+                .step("Copy debit/credit cards",
                       (a, b) -> b.setCards(a.getCards()
                                             .stream() // parallelStream can also be used
                                             .map((cardA) ->

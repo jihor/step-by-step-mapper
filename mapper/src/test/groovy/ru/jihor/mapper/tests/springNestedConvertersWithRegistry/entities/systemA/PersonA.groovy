@@ -10,6 +10,7 @@ class PersonA {
     String lastname
     String firstname
     String middlename
-    Set<CardA> cards
+    Set<DebitCardA> debitCards
+    Set<CreditCardA> creditCards
     List<LoanA> loans
 }

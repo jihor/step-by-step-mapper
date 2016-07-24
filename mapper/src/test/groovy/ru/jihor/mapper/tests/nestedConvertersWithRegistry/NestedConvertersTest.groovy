@@ -81,7 +81,7 @@ class NestedConvertersTest extends Specification {
 
         then: "Exception is thrown"
         def te = thrown(TransformationException)
-        te.getStep() == "[Copy credit cards] -> [Copy validity date]"
+        te.getStep() == "[Copy debit/credit cards] -> [Copy validity date]"
         te.getLocalizedMessage() == "Step [Copy validity date] failed with CheckException: Expected MM/YYYY format, found [12347/019]"
     }
 

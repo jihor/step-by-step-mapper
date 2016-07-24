@@ -6,8 +6,5 @@ package ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.system
  * @author Dmitry Zhikharev (jihor@ya.ru)
  * Created on 25.07.2016
  */
-class CardA {
-    String number
-    String validThru // "MM/YYYY" format
-    String holderName
+class DebitCardA extends CardA{
 }
