@@ -1,7 +1,5 @@
 package ru.jihor.mapper.registry;
 
-import ru.jihor.mapper.base.Converter;
-
 import java.util.function.Supplier;
 
 /**
@@ -23,12 +21,10 @@ public class QueryBuilder<S> {
     }
 
     public <T> T to(Supplier<T> initializedTargetSupplier) {
-        final T initializedTarget = initializedTargetSupplier.get();
-        return to(initializedTarget);
+        return to(initializedTargetSupplier.get());
     }
 
     public <T> T to(T initializedTarget) {
-        final Converter<S, T> converter = registry.getDefaultConverter(source, (Class<T>) initializedTarget.getClass());
-        return converter.convert(source, initializedTarget);
+        return registry.getDefaultConverter(source, (Class<T>) initializedTarget.getClass()).convert(source, initializedTarget);
     }
 }

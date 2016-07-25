@@ -23,7 +23,7 @@ public class ClassPair<S, T> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || !(o instanceof ClassPair)) return false;
 
         ClassPair classPair = (ClassPair) o;
 
@@ -38,5 +38,17 @@ public class ClassPair<S, T> {
 
     @Override public String toString() {
         return "Class pair [" + sourceClass.getCanonicalName() + ", " + targetClass.getCanonicalName() + "]";
+    }
+
+    public static <S, T> ClassPair<S, T> of(S source, T target) {
+        return new ClassPair<>((Class<S>) source.getClass(), (Class<T>) target.getClass());
+    }
+
+    public static <S, T> ClassPair<S, T> of(S source, Class<T> targetClass) {
+        return new ClassPair<>((Class<S>) source.getClass(), targetClass);
+    }
+
+    public static <S, T> ClassPair<S, T> of(Class<S> sourceClass, Class<T> targetClass) {
+        return new ClassPair<>(sourceClass, targetClass);
     }
 }

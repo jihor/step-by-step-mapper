@@ -2,7 +2,7 @@ package ru.jihor.mapper.tests.nestedConvertersWithRegistry
 
 import groovy.util.logging.Slf4j
 import ru.jihor.mapper.exceptions.TransformationException
-import ru.jihor.mapper.registry.ConverterRegistry
+import ru.jihor.mapper.registry.SimpleRegistry
 
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.converters.DemoConverterRegistry
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.CardA
@@ -22,7 +22,7 @@ import spock.lang.Specification
 class NestedConvertersTest extends Specification {
 
     @Shared
-    private ConverterRegistry registry = DemoConverterRegistry.getInstance();
+    private DemoConverterRegistry registry = DemoConverterRegistry.getInstance();
 
     PersonA personA = new PersonA(lastname: "Smith",
             firstname: "John",

@@ -14,7 +14,6 @@ import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemB
 import spock.lang.Specification
 
 import java.util.function.Supplier
-
 /**
  *
  *

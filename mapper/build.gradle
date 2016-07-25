@@ -29,7 +29,8 @@ dependencies {
             "org.springframework:spring-context",
             "org.codehaus.groovy:groovy-all",
             "ch.qos.logback:logback-classic:1.1.7",
-            "org.slf4j:jcl-over-slf4j"
+            "org.slf4j:jcl-over-slf4j",
+            "junit:junit"
 }
 
 publishing {

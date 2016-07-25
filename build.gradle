@@ -57,6 +57,7 @@ subprojects {
             dependency "org.slf4j:jcl-over-slf4j:1.7.12"
             dependency "org.spockframework:spock-core:1.0-groovy-2.4"
             dependency "org.slf4j:slf4j-api:1.7.21"
+            dependency "junit:junit:4.12"
         }
     }
 }

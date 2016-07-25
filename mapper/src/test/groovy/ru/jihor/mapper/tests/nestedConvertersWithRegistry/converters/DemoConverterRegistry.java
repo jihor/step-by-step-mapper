@@ -3,6 +3,7 @@ package ru.jihor.mapper.tests.nestedConvertersWithRegistry.converters;
 import ru.jihor.mapper.registry.ClassPair;
 import ru.jihor.mapper.registry.ConverterRegistry;
 import ru.jihor.mapper.registry.ConfigurableConverterRegistry;
+import ru.jihor.mapper.registry.SimpleRegistry;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.CardA;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.LoanA;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.PersonA;
@@ -24,7 +25,7 @@ public class DemoConverterRegistry extends ConfigurableConverterRegistry {
 
     private DemoConverterRegistry(){}
 
-    @Override protected void configureRegistry(ConverterRegistry aRegistry) {
+    @Override protected void configureRegistry(SimpleRegistry aRegistry) {
         aRegistry.add(new ClassPair<>(PersonA.class, PersonB.class), "personConverter", new PersonAToPersonBConverter());
         aRegistry.add(new ClassPair<>(CardA.class, CardB.class), "cardConverter", new CardAToCardBConverter());
         aRegistry.add(new ClassPair<>(LoanA.class, LoanB.class), "loanConverter", new LoanAToLoanBConverter());
