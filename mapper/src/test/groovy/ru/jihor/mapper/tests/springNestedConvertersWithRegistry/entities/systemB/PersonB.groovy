@@ -12,4 +12,5 @@ class PersonB {
     Set<CardB> cards
     Set<LoanB> loans
     PersonB mainGuarantor // imagine every person with debts has a main guarantor for all the debts
+    String comment
 }

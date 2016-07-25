@@ -4,7 +4,7 @@ import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import ru.jihor.mapper.exceptions.TransformationException
-import ru.jihor.mapper.registry.ConverterRegistry
+import ru.jihor.mapper.registry.QueryableConverterRegistry
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.config.TestConfiguration
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.CreditCardA
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.DebitCardA
@@ -12,6 +12,8 @@ import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.PersonA
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemB.PersonB
 import spock.lang.Specification
+
+import java.util.function.Supplier
 
 /**
  *
@@ -24,7 +26,7 @@ import spock.lang.Specification
 class SpringNestedConvertersTest extends Specification {
 
     @Autowired
-    private ConverterRegistry registry;
+    private QueryableConverterRegistry registry;
 
     PersonA janeDoe = new PersonA(lastname: "Doe",
             firstname: "Jane",
@@ -120,11 +122,42 @@ class SpringNestedConvertersTest extends Specification {
         setup: "Source data is valid"
 
         when: "Map to targetClass"
-        PersonB personB = registry.getDefaultConverter(PersonA.class, PersonB.class).convert(johnSmith)
+        PersonB personB = registry.convert(johnSmith).to(PersonB.class)
 
         then: "No exceptions, valid data in targetClass"
         // TODO: write full check
         personB.loans != null
+    }
+
+    def "Test valid mapping with custom initialized target (object)"() {
+
+        setup: "Source data is valid"
+
+        when: "Map to targetClass"
+        PersonB personB = registry.convert(johnSmith).to(new PersonB(comment: "this is A->B migrated entity"))
+
+        then: "No exceptions, valid data in targetClass"
+        // TODO: write full check
+        personB.loans != null
+        personB.comment == "this is A->B migrated entity"
+    }
+
+    def "Test valid mapping with custom initialized target (supplier)"() {
+
+        setup: "Source data is valid"
+
+        when: "Map to targetClass"
+        PersonB personB = registry.convert(johnSmith).to(new Supplier<PersonB>() { // No-arg constructor would look like PersonB::new in java
+            @Override
+            PersonB get() {
+                new PersonB(comment: "this is A->B migrated entity")
+            }
+        })
+
+        then: "No exceptions, valid data in targetClass"
+        // TODO: write full check
+        personB.loans != null
+        personB.comment == "this is A->B migrated entity"
     }
 
     def "Test wrong data mapping"() {

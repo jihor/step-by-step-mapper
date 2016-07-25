@@ -5,10 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import ru.jihor.mapper.base.Converter;
 import ru.jihor.mapper.registry.ClassPair;
 import ru.jihor.mapper.registry.ConverterRegistry;
-import ru.jihor.mapper.registry.ConfigurableConverterRegistry;
+import ru.jihor.mapper.registry.QueryableConverterRegistry;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.converters.DemoCurrencyDictionary;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.CardA;
-import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.DebitCardA;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.LoanA;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.PersonA;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemB.CardB;
@@ -101,8 +100,8 @@ public class TestConfiguration {
     }
 
     @Bean
-    public ConverterRegistry registry() {
-        return new ConfigurableConverterRegistry() {
+    public QueryableConverterRegistry registry() {
+        return new QueryableConverterRegistry() {
             @Override
             protected void configureRegistry(ConverterRegistry aRegistry) {
                 aRegistry.add(new ClassPair<>(PersonA.class, PersonB.class), "personConverter", personConverter());

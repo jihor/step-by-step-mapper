@@ -45,6 +45,14 @@ public class ConverterRegistry {
 
     }
 
+    public <S, T> Converter<S, T> getDefaultConverter(S source, T target) {
+        return getDefaultConverter((Class<S>)source.getClass(), (Class<T>)target.getClass());
+    }
+
+    public <S, T> Converter<S, T> getDefaultConverter(S source, Class<T> targetClass) {
+        return getDefaultConverter((Class<S>)source.getClass(), targetClass);
+    }
+
     public <S, T> Converter<S, T> getDefaultConverter(Class<S> sourceClass, Class<T> targetClass) {
         ClassPair classPair = new ClassPair<>(sourceClass, targetClass);
         ConcurrentMap<String, Converter> converters = getConvertersForClassPair(classPair);

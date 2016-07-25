@@ -28,7 +28,7 @@ public abstract class DelegatingConverter<S, T> extends Converter<S, T> {
     }
 
     @Override
-    public T convert(S source, Supplier<T> initializedTarget) {
-        return getDelegate().convert(source, initializedTarget);
+    public T convert(S source, Supplier<T> initializedTargetSuppiler) {
+        return getDelegate().convert(source, initializedTargetSuppiler);
     }
 }

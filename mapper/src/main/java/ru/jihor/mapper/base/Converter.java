@@ -1,9 +1,10 @@
 package ru.jihor.mapper.base;
 
-import java.util.function.Supplier;
 import lombok.extern.slf4j.Slf4j;
 import ru.jihor.mapper.builders.ConverterBuilder;
 import ru.jihor.mapper.exceptions.TransformationException;
+
+import java.util.function.Supplier;
 
 /**
  *
@@ -23,10 +24,15 @@ public class Converter<S, T> {
         return target;
     }
 
-    public T convert(S source, Supplier<T> initializedTarget){
-        T target = initializedTarget.get();
+    public T convert(S source, Supplier<T> initializedTargetSuppiler){
+        T target = initializedTargetSuppiler.get();
         doConvert(source, target);
         return target;
+    }
+
+    public T convert(S source, T initializedTarget){
+        doConvert(source, initializedTarget);
+        return initializedTarget;
     }
 
     private void doConvert(S source, T target) {
