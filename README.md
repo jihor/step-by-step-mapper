@@ -46,7 +46,7 @@ A simple Java object-to-object mapping DSL
 **ConverterRegistry** can hold converters for `[SourceType, TargetType]` pairs. See tests in `ru.jihor.mapper.tests.*registry*` packages for usage examples.
 
 * **QueryableConverterRegistry** can search for available transformation (e.g. when trying to map an instance of `A` to instance of `B`, if no converter is present for `[A, B]` exact pair, it will search for the nearest neighbor with `[? super A, B]` class pair).
-* **ConfigurableConverterRegistrysimpler** simply searches for the exact `[A, B]` pair
+* **ConfigurableConverterRegistry** simply searches for the exact `[A, B]` pair
 
 Any registry can also search for a named converter.
 To be of any use, the registry must be populated with converters (see *Usage* section).
