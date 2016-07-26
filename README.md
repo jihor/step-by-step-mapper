@@ -15,7 +15,7 @@ A simple Java object-to-object mapping DSL
 * `step()` - the basic work unit, a named transformation command
 
 	Attributes:
-    - name: `String` (must be unqiue within the pipeline)'
+    - name: `String` (must be unique among the commands in the pipeline)
     - transformation body: `BiConsumer<SourceType, TargetType>`
     
     Should an exception be thrown, the whole pipeline is aborted with faulted step and the exception reported.
@@ -28,7 +28,7 @@ A simple Java object-to-object mapping DSL
     - check body: `Function<SourceType, String>` (if the check returns anything but null or throws an exception, the step is considered faulted and the whole pipeline is aborted)
     - transformation body: `BiConsumer<SourceType, TargetType>`
 
-* `switchCase().when()...[when()...][otherwise()]...endSwitch()` - conditional steps. These steps start a nested transformation pipeline which must be terminated by an `end()` command
+* `switchCase().when()...[.when()...][.otherwise()...].endSwitch()` - conditional steps. These steps start a nested transformation pipelines which must be terminated by an `end()` command
 
     Attributes:
     
