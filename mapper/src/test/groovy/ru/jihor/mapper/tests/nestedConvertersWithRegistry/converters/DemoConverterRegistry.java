@@ -17,6 +17,8 @@ import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemB.Perso
  */
 public class DemoConverterRegistry extends ConfigurableConverterRegistry {
 
+    // We'll be calling this registry from multiple converters so
+    // let's implement it as a singleton even though it's not mandated by the superclass,
     public final static DemoConverterRegistry instance = new DemoConverterRegistry();
 
     public static ConverterRegistry getInstance() {

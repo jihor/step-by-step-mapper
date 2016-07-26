@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public abstract class QueryableConverterRegistry extends ConfigurableConverterRegistry {
-    // TODO :implement caching
     ConcurrentMap<ClassPair, ClassPair> cache = new ConcurrentHashMap<>();
 
     protected void registryUpdated() {
