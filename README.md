@@ -7,29 +7,40 @@ A simple Java object-to-object mapping DSL
 #### Converter
 **Converter** is the main class for mapping definitions. It holds a pipeline of commands (or steps, hence the name 'step-by-step mapper'). The following commands are available:
 
-* `step()` - the basic work unit, a named transformation command.
+* `initializeTarget` - a special step for target object initialization which occurs as a first command in the pipeline. Initializer provided here will be used to initialize the target object when the `convert()` function is called without argument providing an instance of the target object (i.e. without a `Supplier<TargetType>` or an instance of `TargetType`)
+ 
+    Attributes:
+    - targetInitializer: `Supplier<TargetType>`
+
+* `step()` - the basic work unit, a named transformation command
 
 	Attributes:
-    - name (must be unqiue within the pipeline)
-    - transformation body
+    - name: `String` (must be unqiue within the pipeline)'
+    - transformation body: `BiConsumer<SourceType, TargetType>`
     
     Should an exception be thrown, the whole pipeline is aborted with faulted step and the exception reported.
     
     
-* `step() with check` - same as simple step but with a check to be performed before the transformation. * 
+* `step() with check` - same as simple step but with a check to be performed before the transformation 
  	
     Attributes: 
-    - name (must be unqiue within the pipeline)
-    - check body
-    - transformation body. 
+    - name: `String` (must be unique among the commands in the pipeline)
+    - check body: `Function<SourceType, String>` (if the check returns anything but null or throws an exception, the step is considered faulted and the whole pipeline is aborted)
+    - transformation body: `BiConsumer<SourceType, TargetType>`
+
+* `switchCase().when()...[when()...][otherwise()]...endSwitch()` - conditional steps. These steps start a nested transformation pipeline which must be terminated by an `end()` command
+
+    Attributes:
     
-    If the check returns anything but null or throws an exception, the step is considered faulted and the whole pipeline is aborted.
+    for `switchCase()`:
+    - name: `String` (must be unique among the commands in the pipeline)
     
+    for `when()`:
+    - condition: `Predicate<SourceType>`
+    
+    for `otherwise()` and `endSwitch()`: none
 
-* `switchCase().when()...when()...[otherwise()]...endSwitch()` - conditional steps. These steps start a nested transformation pipeline which must be terminated by an `end()` command
-
-
-* end() - a command marking the end of pipeline
+* `end()` - a command marking the end of pipeline
 
 #### Registry
 **ConverterRegistry** class can hold converters for [SourceClass, TargetClass] pairs. See tests in `*WithRegistry` packages for usage examples.
