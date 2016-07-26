@@ -49,6 +49,7 @@ A simple Java object-to-object mapping DSL
 * **ConfigurableConverterRegistry** simply searches for the exact `[A, B]` pair
 
 Any registry can also search for a named converter.
+
 To be of any use, the registry must be populated with converters (see *Usage* section).
 
 ### Usage
