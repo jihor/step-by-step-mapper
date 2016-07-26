@@ -43,7 +43,7 @@ A simple Java object-to-object mapping DSL
 * `end()` - a command marking the end of pipeline
 
 #### Registry
-**ConverterRegistry** class can hold converters for [SourceClass, TargetClass] pairs. See tests in `*WithRegistry` packages for usage examples.
+**ConverterRegistry** can hold converters for `[SourceType, TargetType]` pairs. See tests in `ru.jihor.mapper.tests.*registry*` packages for usage examples.
 
 * **QueryableConverterRegistry** can search for available transformation (e.g. when trying to map an instance of `A` to instance of `B`, if no converter is present for `[A, B]` exact pair, it will search for the nearest neighbor with `[? super A, B]` class pair).
 * **ConfigurableConverterRegistrysimpler** simply searches for the exact `[A, B]` pair
