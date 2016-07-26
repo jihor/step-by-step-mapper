@@ -7,7 +7,7 @@ A simple Java object-to-object mapping DSL
 #### Converter
 **Converter** is the main class for mapping definitions. It holds a pipeline of commands (or steps, hence the name 'step-by-step mapper'). The following commands are available:
 
-* `initializeTarget()` - a special step for target object initialization which occurs as a first command in the pipeline. Initializer provided here will be used to initialize the target object when the `convert()` function is called without argument providing an instance of the target object (i.e. without a `Supplier<TargetType>` or an instance of `TargetType`)
+* `initializeTarget()` - always the first command in pipeline, this is a special step for target object initialization. Initializer provided here will be used to initialize the target object when the `convert()` function is called without argument providing an instance of the target object (i.e. without a `Supplier<TargetType>` or an instance of `TargetType`)
  
     Attributes:
     - targetInitializer: `Supplier<TargetType>`
