@@ -4,33 +4,20 @@ targetCompatibility = 1.8
 dependencies {
     compileOnly "org.projectlombok:lombok",
             "org.slf4j:slf4j-api"
-/*        "com.fasterxml.jackson.core:jackson-annotations",
-        "com.fasterxml.jackson.core:jackson-databind",
-        "com.google.guava:guava",
-        "com.splunk.logging:splunk-library-javalogging",
-        "com.sun.xml.bind:jaxb-impl",
-        "javax.ws.rs:javax.ws.rs-api",
-        "org.apache.commons:commons-lang3",
-        "org.apache.cxf:cxf-rt-frontend-jaxws",
-        "org.apache.cxf:cxf-rt-transports-http-jetty",
-        "org.apache.cxf:cxf-rt-ws-policy",
-        "org.apache.cxf:cxf-rt-ws-security",
-        "org.aspectj:aspectjweaver",
-        "org.codehaus.groovy:groovy-all",
-        "org.projectlombok:lombok",
-        "org.slf4j:jcl-over-slf4j",
-        "org.springframework.boot:spring-boot-starter-ws",
-        "org.springframework:spring-test"*/
 
-    testCompile "org.projectlombok:lombok",
+    testCompile "ch.qos.logback:logback-classic:1.1.7",
+            "junit:junit",
+            "org.codehaus.groovy:groovy-all",
+            "org.projectlombok:lombok",
+            "org.slf4j:jcl-over-slf4j",
             "org.spockframework:spock-core",
             "org.spockframework:spock-spring",
-            "org.springframework:spring-test",
             "org.springframework:spring-context",
-            "org.codehaus.groovy:groovy-all",
-            "ch.qos.logback:logback-classic:1.1.7",
-            "org.slf4j:jcl-over-slf4j",
-            "junit:junit"
+            "org.springframework:spring-test"
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
 }
 
 publishing {
@@ -40,12 +27,16 @@ publishing {
             artifactId 'mapper'
             version project.version
             from components.java
+
+            artifact sourcesJar {
+                classifier "sources"
+            }
         }
     }
 }
 
 bintray {
-    user =  project.hasProperty("user") ? project.property("user") : "fake"
+    user = project.hasProperty("user") ? project.property("user") : "fake"
     key = project.hasProperty("key") ? project.property("key") : "fake"
 
     publications = ['toMaven']
