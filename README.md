@@ -1,5 +1,5 @@
 # Step-by-step mapper
-A simple Java object-to-object mapping DSL
+A simple Java object-to-object mapping framework
 
 [ ![Download](https://api.bintray.com/packages/jihor/maven/mapper/images/download.svg) ](https://bintray.com/jihor/maven/mapper/_latestVersion)
 
