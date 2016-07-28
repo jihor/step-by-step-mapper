@@ -15,9 +15,9 @@ public abstract class AbstractConverterBuilder<P extends AbstractConverterBuilde
         this.parent = parent;
     }
 
-    public P getParent() {
+    protected P getParent() {
         return parent;
     }
 
-    public abstract void accept(Pipeline pipeline);
+    protected abstract void accept(Pipeline pipeline);
 }

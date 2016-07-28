@@ -17,7 +17,7 @@ import java.util.function.Function;
 public class PipelineBuilder<P extends AbstractConverterBuilder, S, T> extends AbstractConverterBuilder<P, S, T> {
     private final Pipeline pipeline = new Pipeline();
 
-    public Pipeline getPipeline() {
+    protected Pipeline getPipeline() {
         return pipeline;
     }
 
@@ -29,8 +29,8 @@ public class PipelineBuilder<P extends AbstractConverterBuilder, S, T> extends A
     }
 
     @Override
-    public void accept(Pipeline pipeline) {
-        throw new UnsupportedOperationException("Pipeline builder doesn't support nested pipelines");
+    protected void accept(Pipeline pipeline) {
+        throw new UnsupportedOperationException("Pipeline builder doesn't support nested pipelines directly");
     }
 
     public PipelineBuilder<P, S, T> step(String id, Step step) {
