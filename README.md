@@ -2,8 +2,31 @@
 A simple Java object-to-object mapping framework
 
 [ ![Download](https://api.bintray.com/packages/jihor/maven/mapper/images/download.svg) ](https://bintray.com/jihor/maven/mapper/_latestVersion)
+### Download
+##### Gradle
+```
+repositories {
+    jcenter()
+}
 
-### API
+dependencies {
+    compile group: 'ru.jihor', name: 'mapper', version: '0.2.3'
+    // or
+    // compile 'ru.jihor:mapper:0.2.3'
+}
+```
+##### Maven
+```
+<dependency>
+    <groupId>ru.jihor</groupId>
+    <artifactId>mapper</artifactId>
+    <version>0.2.3</version>
+    <type>pom</type>
+</dependency>
+```
+Some implementation of the SLF4J API must be provided at runtime. 
+
+### API Description
 #### Converter
 **Converter** is the main class for mapping definitions. It holds a pipeline of commands (or steps, hence the name 'step-by-step mapper'). The following commands are available:
 
@@ -52,7 +75,7 @@ Any registry can also search for a named converter.
 
 To be of any use, the registry must be populated with converters (see *Usage* section).
 
-### Usage
+### Usage examples
 #### Pure Java
 ###### Converter
 In a pure Java environment, use the DelegatingConverter for easy implementation:
