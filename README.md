@@ -10,9 +10,9 @@ repositories {
 }
 
 dependencies {
-    compile group: 'ru.jihor', name: 'mapper', version: '0.2.3'
+    compile group: 'ru.jihor', name: 'mapper', version: '0.2.4'
     // or
-    // compile 'ru.jihor:mapper:0.2.3'
+    // compile 'ru.jihor:mapper:0.2.4'
 }
 ```
 ##### Maven
@@ -20,7 +20,7 @@ dependencies {
 <dependency>
     <groupId>ru.jihor</groupId>
     <artifactId>mapper</artifactId>
-    <version>0.2.3</version>
+    <version>0.2.4</version>
     <type>pom</type>
 </dependency>
 ```
