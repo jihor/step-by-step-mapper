@@ -1,8 +1,8 @@
 package ru.jihor.mapper.tests.nestedConvertersWithRegistry.converters;
 
 import ru.jihor.mapper.registry.ClassPair;
-import ru.jihor.mapper.registry.ConverterRegistry;
 import ru.jihor.mapper.registry.ConfigurableConverterRegistry;
+import ru.jihor.mapper.registry.ConverterRegistry;
 import ru.jihor.mapper.registry.SimpleRegistry;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.CardA;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.LoanA;

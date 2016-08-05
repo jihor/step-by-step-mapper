@@ -10,9 +10,9 @@ repositories {
 }
 
 dependencies {
-    compile group: 'ru.jihor', name: 'mapper', version: '0.2.4'
+    compile group: 'ru.jihor', name: 'mapper', version: '<version>'
     // or
-    // compile 'ru.jihor:mapper:0.2.4'
+    // compile 'ru.jihor:mapper:<version>'
 }
 ```
 ##### Maven
@@ -20,7 +20,7 @@ dependencies {
 <dependency>
     <groupId>ru.jihor</groupId>
     <artifactId>mapper</artifactId>
-    <version>0.2.4</version>
+    <version>(version)</version>
     <type>pom</type>
 </dependency>
 ```
@@ -65,6 +65,12 @@ Some implementation of the SLF4J API must be provided at runtime.
 
 * `end()` - a command marking the end of pipeline
 
+* `useCustomVisitor()` - a command allowing the use of a custom Visitor (the class that actually traverses the pipeline and invokes the transformations). By default, converter uses the `DefaultVisitor` which fails on the first exception - a reasonable thing to do in production. However, when testing, it's often desirable to aggregate all mapping faults at the expense of performance. And there is a special Visitor for this - the `ExceptionAggregatingVisitor` - that aggregates all faults on the pipeline and throws them as one exception at the end of transformation.  
+ 
+    Attributes:
+    - visitorSupplier: `Supplier<Visitor>`
+
+* `build()` - a command to build the Converter 
 #### Registry
 **ConverterRegistry** can hold converters for `[SourceType, TargetType]` pairs. See tests in `ru.jihor.mapper.tests.*registry*` packages for usage examples.
 
@@ -105,6 +111,7 @@ public class MyConverter extends DelegatingConverter<Source, Target> {
                 .endSwitch()
                 .step("Map more data", (src, target) -> ...)
                 .end()
+                .useCustomVisitor(ExceptionAggregatingVisitor::new)
                 .build();
     }
 ```
@@ -143,20 +150,21 @@ public Converter<Source, Target> simpleConverter() {
             .step("Map data", (src, target) -> ...)
             .step("Map additional data", (src, target) -> ...)
             .switchCase("Check something in source object")
-            .when(src -> src.getSomeIndicator() == 0)
-            .step("Map data", (src, target) -> ...)
+                .when(src -> src.getSomeIndicator() == 0)
+                    .step("Map data", (src, target) -> ...)
                     .step("Map additional data", (src, target) -> ...)
                     .end()
-            .when(src -> src.getSomeIndicator() == 42)
-            .step("Map data other way", (src, target) -> ...)
+                .when(src -> src.getSomeIndicator() == 42)
+                    .step("Map data other way", (src, target) -> ...)
                     .step("Map additional data", (src, target) -> ...)
                     .end()
-            .otherwise()
-            .step("Map data third way", (src, target) -> ... )
+                .otherwise()
+                    .step("Map data third way", (src, target) -> ... )
                     .end()
-            .endSwitch()
+                .endSwitch()
             .step("Map more data", (src, target) -> ...)
             .end()
+            .useCustomVisitor(ExceptionAggregatingVisitor::new)
             .build();
 }
 ```

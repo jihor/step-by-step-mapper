@@ -6,12 +6,8 @@ import org.springframework.test.context.ContextConfiguration
 import ru.jihor.mapper.base.Converter
 import ru.jihor.mapper.exceptions.TransformationException
 import ru.jihor.mapper.tests.springSimpleConverter.config.TestConfiguration
-
 import ru.jihor.mapper.tests.springSimpleConverter.dictionaries.SimpleDictionary
-import ru.jihor.mapper.tests.springSimpleConverter.entities.BusinessSection
-import ru.jihor.mapper.tests.springSimpleConverter.entities.SampleSource
-import ru.jihor.mapper.tests.springSimpleConverter.entities.SampleTarget
-import ru.jihor.mapper.tests.springSimpleConverter.entities.TechSection
+import ru.jihor.mapper.tests.springSimpleConverter.entities.*
 import spock.lang.Specification
 
 /**
@@ -58,7 +54,6 @@ class SpringConverterTest extends Specification {
 
         then: "No exceptions, error data in targetClass"
         target.error.message == "Error code [$code], description [$description]"
-        !target.data
     }
 
     def "Test valid mapping (source is invalid)"() {
@@ -72,22 +67,26 @@ class SpringConverterTest extends Specification {
 
         then: "No exceptions, error data in targetClass"
         target.error.message == "Source contains no error code but business data is empty"
-        !target.data
     }
 
-    def "Test mapping fault"() {
+    def "Test mapping faults"() {
 
-        setup: "Source is valid and has errorCode == 0"
+        setup: "Source says it's valid but causes mapping exception"
         def data = "some nonexistent value"
-        SampleSource src = new SampleSource(techSection: new TechSection(errorCode: 0, description: ""), businessSection: new BusinessSection(data: data))
-        def target
+        SampleSource src = new SampleSource(techSection: new TechSection(errorCode: 0, description: ""),
+                                            businessSection: new BusinessSection(data: data),
+                                            informantSection: new InformantSection(infoSource: null, paidPrice: new Long(Integer.MAX_VALUE + 1)))
 
         when: "Map to targetClass"
-        target = converter.convert(src)
+        converter.convert(src)
 
-        then: "No exceptions, valid data in targetClass"
+        then: "And exception containing all faults is thrown"
         def exception = thrown(TransformationException)
-        exception.message == "Step [Map data] failed with IllegalArgumentException: No mapping defined for [$data]"
-        exception.step == "[Check errorCode] -> [Check if business data exists] -> [Map data]"
+        // all errors should be there, and no duplicate errors
+        exception.message ==
+                "[Step [Map data] failed with IllegalArgumentException: No mapping defined for [some nonexistent value], " +
+                "Step [Copy informant info] failed with NullPointerException: null, " +
+                "Step [Copy how much we paid him for the info] failed with ClassCastException: java.lang.Long cannot be cast to java.lang.Integer]"
+        exception.step == "[System]"
     }
 }

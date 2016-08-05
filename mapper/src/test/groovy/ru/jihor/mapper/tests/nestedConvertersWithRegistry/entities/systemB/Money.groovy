@@ -1,8 +1,4 @@
 package ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemB
-
-import groovy.transform.TupleConstructor
-import lombok.AllArgsConstructor
-
 /**
  *
  *

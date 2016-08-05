@@ -8,7 +8,7 @@ package ru.jihor.mapper.tests.springSimpleConverter.entities
  */
 class SampleTarget {
     Error error
-    Data data
+    Data data = new Data()
 }
 
 class Error {
@@ -19,8 +19,7 @@ class Error {
 }
 
 class Data {
-    Data(value) {
-        this.value = value
-    }
     def value
+    def informationSource
+    Integer price
 }

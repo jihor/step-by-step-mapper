@@ -10,7 +10,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.jihor.mapper.base.Converter;
 import ru.jihor.mapper.exceptions.RegistryException;
-import ru.jihor.mapper.exceptions.TransformationException;
 import ru.jihor.mapper.registry.ClassPair;
 import ru.jihor.mapper.registry.QueryableConverterRegistry;
 import ru.jihor.mapper.tests.registryQueries.config.TestConfiguration;

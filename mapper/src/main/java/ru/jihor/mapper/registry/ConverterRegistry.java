@@ -3,7 +3,6 @@ package ru.jihor.mapper.registry;
 import ru.jihor.mapper.base.Converter;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author jihor (dmitriy_zhikharev@rgs.ru)

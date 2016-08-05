@@ -1,9 +1,9 @@
 package ru.jihor.mapper.builders;
 
-import ru.jihor.mapper.steps.CheckingTransformationStep;
-import ru.jihor.mapper.steps.TransformationStep;
 import ru.jihor.mapper.base.Pipeline;
 import ru.jihor.mapper.base.Step;
+import ru.jihor.mapper.steps.CheckingTransformationStep;
+import ru.jihor.mapper.steps.TransformationStep;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;

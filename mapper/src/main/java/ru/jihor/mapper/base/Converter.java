@@ -16,8 +16,9 @@ import java.util.function.Supplier;
 @Slf4j
 public class Converter<S, T> {
 
-    private Pipeline pipeline;
-    private Supplier<T> targetInitializer;
+    public static <S, T> ConverterBuilder<S, T> builder() {
+        return new ConverterBuilder<>(new Converter<>());
+    }
 
     public T convert(S source) {
         T target = targetInitializer.get();
@@ -25,8 +26,8 @@ public class Converter<S, T> {
         return target;
     }
 
-    public T convert(S source, Supplier<T> initializedTargetSuppiler){
-        T target = initializedTargetSuppiler.get();
+    public T convert(S source, Supplier<T> initializedTargetSupplier){
+        T target = initializedTargetSupplier.get();
         doConvert(source, target);
         return target;
     }
@@ -40,26 +41,35 @@ public class Converter<S, T> {
         if (pipeline == null) {
             throw new TransformationException("System", "Pipeline not set");
         }
-        getVisitor(source, target).visit(pipeline);
+        Visitor<S, T> visitor = getVisitorSupplier().get();
+        visitor.setSource(source);
+        visitor.setTarget(target);
+        visitor.visit(pipeline);
     }
 
-    protected Visitor<S, T> getVisitor(S source, T target) {
-        return new DefaultVisitor<>(source, target);
+    private Pipeline pipeline;
+
+    public void setPipeline(Pipeline pipeline) {
+        this.pipeline = pipeline;
     }
 
-    public static <S, T> ConverterBuilder<S, T> builder() {
-        return new ConverterBuilder<>(new Converter<>());
+    private Supplier<Visitor<S, T>> visitorSupplier = DefaultVisitor::new;
+
+    public Supplier<Visitor<S, T>> getVisitorSupplier() {
+        return visitorSupplier;
     }
 
-    public Supplier<T> getTargetInitializer() {
-        return targetInitializer;
+    public void setVisitorSupplier(Supplier<Visitor<S, T>> visitorSupplier) {
+        this.visitorSupplier = visitorSupplier;
     }
+
+    private Supplier<T> targetInitializer;
 
     public void setTargetInitializer(Supplier<T> targetInitializer) {
         this.targetInitializer = targetInitializer;
     }
 
-    public void setPipeline(Pipeline pipeline) {
-        this.pipeline = pipeline;
+    public Supplier<T> getTargetInitializer() {
+        return targetInitializer;
     }
 }

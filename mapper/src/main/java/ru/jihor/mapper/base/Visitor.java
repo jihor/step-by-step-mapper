@@ -16,4 +16,12 @@ public interface Visitor<S, T> {
     void visit(SwitchCaseStep<S, T> step);
 
     void visit(Pipeline pipeline);
+
+    S getSource();
+
+    void setSource(S source);
+
+    T getTarget();
+
+    void setTarget(T target);
 }

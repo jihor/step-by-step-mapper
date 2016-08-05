@@ -2,8 +2,6 @@ package ru.jihor.mapper.tests.nestedConvertersWithRegistry
 
 import groovy.util.logging.Slf4j
 import ru.jihor.mapper.exceptions.TransformationException
-import ru.jihor.mapper.registry.SimpleRegistry
-
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.converters.DemoConverterRegistry
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.CardA
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.LoanA

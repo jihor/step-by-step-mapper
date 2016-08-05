@@ -1,7 +1,4 @@
 package ru.jihor.mapper.tests.registryQueries.entities.systemA
-
-import java.math.BigDecimal;
-
 /**
  * @author Dmitry Zhikharev (jihor@ya.ru)
  *         Created on 22.07.2016

@@ -1,8 +1,10 @@
 package ru.jihor.mapper.builders;
 
-import java.util.function.Supplier;
 import lombok.extern.slf4j.Slf4j;
 import ru.jihor.mapper.base.Converter;
+import ru.jihor.mapper.base.Visitor;
+
+import java.util.function.Supplier;
 
 /**
  *
@@ -27,6 +29,11 @@ public class ConverterBuilder<S, T> extends PipelineBuilder<ConverterBuilder<S, 
 
     public PipelineBuilder<ConverterBuilder<S, T>, S, T> initializeTarget(Supplier<T> targetInitializer) {
         converter.setTargetInitializer(targetInitializer);
+        return this;
+    }
+
+    public ConverterBuilder<S, T> useCustomVisitor(Supplier<Visitor<S, T>> visitorSupplier) {
+        converter.setVisitorSupplier(visitorSupplier);
         return this;
     }
 

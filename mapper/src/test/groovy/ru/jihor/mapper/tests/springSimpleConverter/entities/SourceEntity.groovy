@@ -9,6 +9,7 @@ package ru.jihor.mapper.tests.springSimpleConverter.entities
 class SampleSource {
     TechSection techSection
     BusinessSection businessSection
+    InformantSection informantSection = new InformantSection()
 }
 
 class TechSection {
@@ -18,4 +19,9 @@ class TechSection {
 
 class BusinessSection {
     String data
+}
+
+class InformantSection {
+    String infoSource = "anonymous informant"
+    Number paidPrice = new Integer(100)
 }

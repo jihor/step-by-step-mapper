@@ -21,22 +21,36 @@ import java.util.function.Predicate;
 @Slf4j
 public class DefaultVisitor<S, T> implements Visitor<S, T> {
 
-    S source;
-    T target;
+    private S source;
 
-    public DefaultVisitor(S source, T target) {
+    public S getSource() {
+        return source;
+    }
+
+    @Override
+    public void setSource(S source) {
         this.source = source;
+    }
+
+    private T target;
+
+    public T getTarget() {
+        return target;
+    }
+
+    @Override
+    public void setTarget(T target) {
         this.target = target;
     }
 
     @Override
     public void visit(TransformationStep<S, T> step) {
-        step.getTransformation().accept(source, target);
+        step.getTransformation().accept(getSource(), getTarget());
     }
 
     @Override
     public void visit(CheckingTransformationStep<S, T> step) {
-        String checkResult = step.getCheck().apply(source);
+        String checkResult = step.getCheck().apply(getSource());
         if (checkResult != null) {
             throw new CheckException(checkResult);
         }
@@ -46,7 +60,7 @@ public class DefaultVisitor<S, T> implements Visitor<S, T> {
     @Override
     public void visit(SwitchCaseStep<S, T> step) {
         for (Map.Entry<Predicate<S>, Pipeline> _case : step.getCases().entrySet()) {
-            if (_case.getKey().test(source)) {
+            if (_case.getKey().test(getSource())) {
                 visit(_case.getValue());
                 return;
             }
@@ -59,24 +73,40 @@ public class DefaultVisitor<S, T> implements Visitor<S, T> {
             String id = entry.getKey();
             Step step = entry.getValue();
             try {
-                log.debug("Entering step [{}]", id);
+                beforeStep(id);
                 step.accept(this);
-                log.debug("Exiting step [{}]", id);
+                afterStep(id);
             } catch (TransformationException te) {
-                final String description = MessageFormat.format("Step [{0}] -> {1} failed: {2}",
-                                                                id,
-                                                                te.getStep(),
-                                                                te.getLocalizedMessage());
-                log.error(description, te);
-                throw new TransformationException(id, te);
+                processException(te, id);
             } catch (Exception e) {
-                final String description = MessageFormat.format("Step [{0}] failed with {1}: {2}",
-                                                                id,
-                                                                e.getClass().getSimpleName(),
-                                                                e.getLocalizedMessage());
-                log.error(description, e);
-                throw new TransformationException(id, description);
+                processException(e, id);
             }
         }
+    }
+
+    protected void processException(TransformationException te, String stepId) {
+        final String description = MessageFormat.format("Step [{0}] -> {1} failed: {2}",
+                                                        stepId,
+                                                        te.getStep(),
+                                                        te.getLocalizedMessage());
+        log.error(description, te);
+        throw new TransformationException(stepId, te);
+    }
+
+    protected void processException(Exception e, String stepId) {
+        final String description = MessageFormat.format("Step [{0}] failed with {1}: {2}",
+                                                        stepId,
+                                                        e.getClass().getSimpleName(),
+                                                        e.getLocalizedMessage());
+        log.error(description, e);
+        throw new TransformationException(stepId, description);
+    }
+
+    protected void beforeStep(String stepId) {
+        log.debug("Entering step [{}]", stepId);
+    }
+
+    protected void afterStep(String stepId) {
+        log.debug("Exiting step [{}]", stepId);
     }
 }

@@ -1,7 +1,7 @@
 package ru.jihor.mapper.builders;
 
-import ru.jihor.mapper.steps.SwitchCaseStep;
 import ru.jihor.mapper.base.Pipeline;
+import ru.jihor.mapper.steps.SwitchCaseStep;
 
 import java.util.function.Predicate;
 

@@ -1,11 +1,12 @@
 package ru.jihor.mapper.steps;
 
-import java.util.LinkedHashMap;
-import java.util.function.Predicate;
 import lombok.extern.slf4j.Slf4j;
 import ru.jihor.mapper.base.Pipeline;
 import ru.jihor.mapper.base.Step;
 import ru.jihor.mapper.base.Visitor;
+
+import java.util.LinkedHashMap;
+import java.util.function.Predicate;
 
 /**
  *
