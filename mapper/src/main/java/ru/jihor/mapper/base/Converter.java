@@ -39,7 +39,7 @@ public class Converter<S, T> {
         if (pipeline == null) {
             throw new TransformationException("System", "Pipeline not set");
         }
-        new Visitor<>(source, target).visit(pipeline);
+        new DefaultVisitor<>(source, target).visit(pipeline);
     }
 
     public static <S, T> ConverterBuilder<S, T> builder() {
