@@ -3,6 +3,7 @@ package ru.jihor.mapper.base;
 import lombok.extern.slf4j.Slf4j;
 import ru.jihor.mapper.builders.ConverterBuilder;
 import ru.jihor.mapper.exceptions.TransformationException;
+import ru.jihor.mapper.visitors.DefaultVisitor;
 
 import java.util.function.Supplier;
 
@@ -39,7 +40,11 @@ public class Converter<S, T> {
         if (pipeline == null) {
             throw new TransformationException("System", "Pipeline not set");
         }
-        new DefaultVisitor<>(source, target).visit(pipeline);
+        getVisitor(source, target).visit(pipeline);
+    }
+
+    protected Visitor<S, T> getVisitor(S source, T target) {
+        return new DefaultVisitor<>(source, target);
     }
 
     public static <S, T> ConverterBuilder<S, T> builder() {
