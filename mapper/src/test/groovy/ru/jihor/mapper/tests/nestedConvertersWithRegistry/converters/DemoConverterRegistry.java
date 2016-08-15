@@ -1,6 +1,6 @@
 package ru.jihor.mapper.tests.nestedConvertersWithRegistry.converters;
 
-import ru.jihor.mapper.registries.ClassPair;
+import ru.jihor.mapper.registries.util.ClassPair;
 import ru.jihor.mapper.registries.ConfigurableConverterRegistry;
 import ru.jihor.mapper.registries.ConverterRegistry;
 import ru.jihor.mapper.registries.SimpleRegistry;

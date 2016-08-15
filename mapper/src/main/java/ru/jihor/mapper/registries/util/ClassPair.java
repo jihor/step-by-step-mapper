@@ -1,4 +1,4 @@
-package ru.jihor.mapper.registries;
+package ru.jihor.mapper.registries.util;
 
 import lombok.Getter;
 

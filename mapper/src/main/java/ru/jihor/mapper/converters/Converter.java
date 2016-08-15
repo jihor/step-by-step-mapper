@@ -1,6 +1,6 @@
 package ru.jihor.mapper.converters;
 
-import ru.jihor.mapper.pipeline.Pipeline;
+import ru.jihor.mapper.pipelines.Pipeline;
 import ru.jihor.mapper.visitors.Visitor;
 
 import java.util.function.Supplier;

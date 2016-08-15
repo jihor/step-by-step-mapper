@@ -3,6 +3,7 @@ package ru.jihor.mapper.registries;
 import lombok.extern.slf4j.Slf4j;
 import ru.jihor.mapper.converters.Converter;
 import ru.jihor.mapper.exceptions.RegistryException;
+import ru.jihor.mapper.registries.util.ClassPair;
 
 import java.text.MessageFormat;
 import java.util.Map;
@@ -14,8 +15,8 @@ import java.util.concurrent.ConcurrentMap;
  *         Created on 22.07.2016
  */
 @Slf4j
-public class SimpleRegistry extends ConverterRegistry {
-    protected ConcurrentMap<ClassPair, ConcurrentMap<String, Converter>> getRegistry() {
+public class SimpleRegistry implements ConverterRegistry {
+    public ConcurrentMap<ClassPair, ConcurrentMap<String, Converter>> getRegistry() {
         return registry;
     }
 
@@ -43,10 +44,6 @@ public class SimpleRegistry extends ConverterRegistry {
             });
             return existing;
         });
-        registryUpdated();
-    }
-
-    protected void registryUpdated() {
     }
 
     @Override

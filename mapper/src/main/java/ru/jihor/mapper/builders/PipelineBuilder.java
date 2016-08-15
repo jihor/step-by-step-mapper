@@ -1,6 +1,7 @@
 package ru.jihor.mapper.builders;
 
-import ru.jihor.mapper.pipeline.Pipeline;
+import ru.jihor.mapper.pipelines.BasicPipeline;
+import ru.jihor.mapper.pipelines.Pipeline;
 import ru.jihor.mapper.steps.Step;
 import ru.jihor.mapper.steps.CheckingTransformationStep;
 import ru.jihor.mapper.steps.TransformationStep;
@@ -15,7 +16,7 @@ import java.util.function.Function;
  * Created on 2016-07-01
  */
 public class PipelineBuilder<P extends AbstractConverterBuilder, S, T> extends AbstractConverterBuilder<P, S, T> {
-    private final Pipeline pipeline = new Pipeline();
+    private final Pipeline pipeline = new BasicPipeline();
 
     protected Pipeline getPipeline() {
         return pipeline;

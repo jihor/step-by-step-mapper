@@ -1,4 +1,6 @@
-package ru.jihor.mapper.registries;
+package ru.jihor.mapper.registries.queryable;
+
+import ru.jihor.mapper.registries.ConverterRegistry;
 
 import java.util.function.Supplier;
 

@@ -1,6 +1,6 @@
 package ru.jihor.mapper.builders;
 
-import ru.jihor.mapper.pipeline.Pipeline;
+import ru.jihor.mapper.pipelines.Pipeline;
 
 /**
  *
@@ -11,7 +11,7 @@ import ru.jihor.mapper.pipeline.Pipeline;
 public abstract class AbstractConverterBuilder<P extends AbstractConverterBuilder, S, T> {
     private final P parent;
 
-    public AbstractConverterBuilder(P parent) {
+    protected AbstractConverterBuilder(P parent) {
         this.parent = parent;
     }
 

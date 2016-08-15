@@ -1,7 +1,7 @@
 package ru.jihor.mapper.converters;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.jihor.mapper.pipeline.Pipeline;
+import ru.jihor.mapper.pipelines.Pipeline;
 import ru.jihor.mapper.visitors.Visitor;
 import ru.jihor.mapper.exceptions.TransformationException;
 import ru.jihor.mapper.visitors.DefaultVisitor;

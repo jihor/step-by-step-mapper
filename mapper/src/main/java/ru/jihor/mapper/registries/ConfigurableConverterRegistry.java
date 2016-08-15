@@ -1,6 +1,7 @@
 package ru.jihor.mapper.registries;
 
 import ru.jihor.mapper.converters.Converter;
+import ru.jihor.mapper.registries.util.ClassPair;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -9,7 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Dmitry Zhikharev (jihor@ya.ru)
  *         Created on 23.07.2016
  */
-public abstract class ConfigurableConverterRegistry extends ConverterRegistry {
+public abstract class ConfigurableConverterRegistry implements ConverterRegistry {
     private SimpleRegistry delegate;
 
     // Converters may be added dynamically if needed
@@ -68,7 +69,7 @@ public abstract class ConfigurableConverterRegistry extends ConverterRegistry {
     }
 
     @Override
-    protected Map<ClassPair, ? extends Map<String, Converter>> getRegistry() {
+    public Map<ClassPair, ? extends Map<String, Converter>> getRegistry() {
         ensureInitialization();
         return delegate.getRegistry();
     }

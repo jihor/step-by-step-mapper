@@ -1,4 +1,4 @@
-package ru.jihor.mapper.registries;
+package ru.jihor.mapper.registries.util;
 
 /**
  * @author jihor (dmitriy_zhikharev@rgs.ru)

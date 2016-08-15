@@ -1,7 +1,7 @@
 package ru.jihor.mapper.steps;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.jihor.mapper.pipeline.Pipeline;
+import ru.jihor.mapper.pipelines.Pipeline;
 import ru.jihor.mapper.visitors.Visitor;
 
 import java.util.LinkedHashMap;

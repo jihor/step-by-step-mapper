@@ -1,7 +1,7 @@
 package ru.jihor.mapper.visitors;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.jihor.mapper.pipeline.Pipeline;
+import ru.jihor.mapper.pipelines.Pipeline;
 import ru.jihor.mapper.exceptions.TransformationException;
 
 import java.text.MessageFormat;
@@ -20,7 +20,7 @@ public class ExceptionAggregatingVisitor<S, T> extends DefaultVisitor<S, T>{
 
     @Override
     public void visit(Pipeline pipeline) {
-        // first pipeline we encounter is the root one, let's store a reference to it
+        // first pipelines we encounter is the root one, let's store a reference to it
         if (rootPipeline == null){
             rootPipeline = pipeline;
         }

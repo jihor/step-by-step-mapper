@@ -1,8 +1,11 @@
-package ru.jihor.mapper.registries;
+package ru.jihor.mapper.registries.queryable;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.jihor.mapper.converters.Converter;
 import ru.jihor.mapper.exceptions.RegistryException;
+import ru.jihor.mapper.registries.ConfigurableConverterRegistry;
+import ru.jihor.mapper.registries.util.ClassPair;
+import ru.jihor.mapper.registries.util.PrioritizedClassPair;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
