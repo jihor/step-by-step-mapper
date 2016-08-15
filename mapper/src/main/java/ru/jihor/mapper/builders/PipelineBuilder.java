@@ -15,23 +15,26 @@ import java.util.function.Function;
  * @author Dmitry Zhikharev (jihor@ya.ru)
  * Created on 2016-07-01
  */
-public class PipelineBuilder<P extends AbstractConverterBuilder, S, T> extends AbstractConverterBuilder<P, S, T> {
+public class PipelineBuilder<P extends Builder, S, T> implements Builder<P> {
     private final Pipeline pipeline = new BasicPipeline();
+    private P parent;
+
+    public PipelineBuilder (P parent) {
+        this.parent = parent;
+    }
 
     protected Pipeline getPipeline() {
         return pipeline;
     }
 
-    public PipelineBuilder () {
-        super(null);
-    }
-    public PipelineBuilder (P parent) {
-        super(parent);
+    @Override
+    public P getParent() {
+        return parent;
     }
 
     @Override
-    protected void accept(Pipeline pipeline) {
-        throw new UnsupportedOperationException("Pipeline builder doesn't support nested pipelines directly");
+    public void accept(Pipeline pipeline) {
+        throw new UnsupportedOperationException("Direct pipeline nesting is not supported");
     }
 
     public PipelineBuilder<P, S, T> step(String id, Step step) {
@@ -55,12 +58,8 @@ public class PipelineBuilder<P extends AbstractConverterBuilder, S, T> extends A
     }
 
     public P end(){
-        if (getParent() != null){
-            getParent().accept(pipeline);
-            return getParent();
-        } else {
-            return (P)this;
-        }
+        getParent().accept(pipeline);
+        return getParent();
     }
 
 }

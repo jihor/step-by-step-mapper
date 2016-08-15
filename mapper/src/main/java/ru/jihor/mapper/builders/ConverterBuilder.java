@@ -18,7 +18,7 @@ public class ConverterBuilder<S, T> extends PipelineBuilder<ConverterBuilder<S, 
     private Converter<S, T> converter;
 
     public ConverterBuilder(Converter<S, T> converter) {
-        super();
+        super(null);
         this.converter = converter;
     }
 
@@ -37,4 +37,8 @@ public class ConverterBuilder<S, T> extends PipelineBuilder<ConverterBuilder<S, 
         return this;
     }
 
+    @Override
+    public ConverterBuilder<S, T> end() {
+        return this;
+    }
 }
