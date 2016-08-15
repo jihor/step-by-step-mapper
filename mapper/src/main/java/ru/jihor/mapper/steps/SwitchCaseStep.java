@@ -15,7 +15,7 @@ import java.util.function.Predicate;
  * Created on 2016-07-01
  */
 @Slf4j
-public class SwitchCaseStep<S, T> extends Step {
+public class SwitchCaseStep<S, T> implements Step {
     private final LinkedHashMap<Predicate<S>, Pipeline> cases = new LinkedHashMap<>();
 
     public LinkedHashMap<Predicate<S>, Pipeline> getCases() {
