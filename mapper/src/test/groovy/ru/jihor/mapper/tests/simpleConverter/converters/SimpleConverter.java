@@ -1,7 +1,8 @@
 package ru.jihor.mapper.tests.simpleConverter.converters;
 
-import ru.jihor.mapper.base.Converter;
-import ru.jihor.mapper.base.DelegatingConverter;
+import ru.jihor.mapper.Converters;
+import ru.jihor.mapper.converters.Converter;
+import ru.jihor.mapper.converters.DelegatingConverter;
 import ru.jihor.mapper.tests.simpleConverter.dictionaries.SimpleDictionary;
 import ru.jihor.mapper.tests.simpleConverter.entities.Data;
 import ru.jihor.mapper.tests.simpleConverter.entities.Error;
@@ -17,7 +18,7 @@ public class SimpleConverter extends DelegatingConverter<SampleSource, SampleTar
 
     @Override
     protected Converter<SampleSource, SampleTarget> configureDelegate() {
-        return Converter
+        return Converters
                 .<SampleSource, SampleTarget>builder()
                 .initializeTarget(SampleTarget::new)
                 .switchCase("Check errorCode")

@@ -3,7 +3,7 @@ package ru.jihor.mapper.tests.springSimpleConverter
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
-import ru.jihor.mapper.base.Converter
+import ru.jihor.mapper.converters.Converter
 import ru.jihor.mapper.exceptions.TransformationException
 import ru.jihor.mapper.tests.springSimpleConverter.config.TestConfiguration
 import ru.jihor.mapper.tests.springSimpleConverter.dictionaries.SimpleDictionary

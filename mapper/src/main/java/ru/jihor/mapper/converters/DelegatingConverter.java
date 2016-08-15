@@ -1,4 +1,4 @@
-package ru.jihor.mapper.base;
+package ru.jihor.mapper.converters;
 
 import java.util.function.Supplier;
 
@@ -8,7 +8,7 @@ import java.util.function.Supplier;
  * @author Dmitry Zhikharev (jihor@ya.ru)
  * Created on 2016-07-01
  */
-public abstract class DelegatingConverter<S, T> extends Converter<S, T> {
+public abstract class DelegatingConverter<S, T> extends BasicConverter<S, T> {
 
     private Converter<S, T> delegate;
 

@@ -1,9 +1,8 @@
 package ru.jihor.mapper.visitors;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.jihor.mapper.base.Pipeline;
-import ru.jihor.mapper.base.Step;
-import ru.jihor.mapper.base.Visitor;
+import ru.jihor.mapper.pipeline.Pipeline;
+import ru.jihor.mapper.steps.Step;
 import ru.jihor.mapper.exceptions.CheckException;
 import ru.jihor.mapper.exceptions.TransformationException;
 import ru.jihor.mapper.steps.CheckingTransformationStep;

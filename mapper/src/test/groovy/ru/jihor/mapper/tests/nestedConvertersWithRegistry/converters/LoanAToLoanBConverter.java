@@ -1,8 +1,9 @@
 package ru.jihor.mapper.tests.nestedConvertersWithRegistry.converters;
 
-import ru.jihor.mapper.base.Converter;
-import ru.jihor.mapper.base.DelegatingConverter;
-import ru.jihor.mapper.registry.ConverterRegistry;
+import ru.jihor.mapper.Converters;
+import ru.jihor.mapper.converters.Converter;
+import ru.jihor.mapper.converters.DelegatingConverter;
+import ru.jihor.mapper.registries.ConverterRegistry;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.CardA;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.LoanA;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemB.CardB;
@@ -18,7 +19,7 @@ public class LoanAToLoanBConverter extends DelegatingConverter<LoanA, LoanB> {
     private ConverterRegistry registry = DemoConverterRegistry.getInstance();
 
     @Override protected Converter<LoanA, LoanB> configureDelegate() {
-        return Converter
+        return Converters
                 .<LoanA, LoanB>builder()
                 .initializeTarget(LoanB::new)
                 .step("Copy loan amount", (a, b) -> b.setLoanAmount(new Money(a.getLoanAmount(), "EUR")))

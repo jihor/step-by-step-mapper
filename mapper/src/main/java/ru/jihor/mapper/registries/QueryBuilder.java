@@ -1,4 +1,4 @@
-package ru.jihor.mapper.registry;
+package ru.jihor.mapper.registries;
 
 import java.util.function.Supplier;
 

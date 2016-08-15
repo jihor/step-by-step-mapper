@@ -2,10 +2,11 @@ package ru.jihor.mapper.tests.springNestedConvertersWithRegistry.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.jihor.mapper.base.Converter;
-import ru.jihor.mapper.registry.ClassPair;
-import ru.jihor.mapper.registry.QueryableConverterRegistry;
-import ru.jihor.mapper.registry.SimpleRegistry;
+import ru.jihor.mapper.Converters;
+import ru.jihor.mapper.converters.Converter;
+import ru.jihor.mapper.registries.ClassPair;
+import ru.jihor.mapper.registries.QueryableConverterRegistry;
+import ru.jihor.mapper.registries.SimpleRegistry;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.converters.DemoCurrencyDictionary;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.CardA;
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.LoanA;
@@ -26,7 +27,7 @@ import java.util.stream.Collectors;
 public class TestConfiguration {
     @Bean
     public Converter<PersonA, PersonB> personConverter() {
-        return Converter
+        return Converters
                 .<PersonA, PersonB>builder()
                 .initializeTarget(PersonB::new)
                 .step("Copy full name", (a, b) -> {
@@ -63,7 +64,7 @@ public class TestConfiguration {
 
     @Bean
     public Converter<CardA, CardB> cardConverter() {
-        return Converter.<CardA, CardB>builder()
+        return Converters.<CardA, CardB>builder()
                 .initializeTarget(CardB::new)
                 .step("Copy card number", (a, b) -> b.setCardNumber(new BigInteger(a.getNumber())))
                 .step("Copy validity date",
@@ -81,7 +82,7 @@ public class TestConfiguration {
 
     @Bean
     public Converter<LoanA, LoanB> loanConverter() {
-        return Converter
+        return Converters
                 .<LoanA, LoanB>builder()
                 .initializeTarget(LoanB::new)
                 .step("Copy loan amount", (a, b) -> b.setLoanAmount(new Money(a.getLoanAmount(), dictionary().getCurrencyCode())))

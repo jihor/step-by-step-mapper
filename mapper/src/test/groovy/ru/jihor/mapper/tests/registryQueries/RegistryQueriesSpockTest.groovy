@@ -3,7 +3,7 @@ package ru.jihor.mapper.tests.registryQueries
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
-import ru.jihor.mapper.registry.QueryableConverterRegistry
+import ru.jihor.mapper.registries.QueryableConverterRegistry
 import ru.jihor.mapper.tests.registryQueries.config.TestConfiguration
 import ru.jihor.mapper.tests.registryQueries.entities.systemA.CardA
 import ru.jihor.mapper.tests.registryQueries.entities.systemA.CreditCardA

@@ -1,6 +1,6 @@
 package ru.jihor.mapper.builders;
 
-import ru.jihor.mapper.base.Pipeline;
+import ru.jihor.mapper.pipeline.Pipeline;
 
 /**
  *

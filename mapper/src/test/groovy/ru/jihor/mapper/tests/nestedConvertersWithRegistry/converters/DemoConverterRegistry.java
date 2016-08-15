@@ -1,9 +1,9 @@
 package ru.jihor.mapper.tests.nestedConvertersWithRegistry.converters;
 
-import ru.jihor.mapper.registry.ClassPair;
-import ru.jihor.mapper.registry.ConfigurableConverterRegistry;
-import ru.jihor.mapper.registry.ConverterRegistry;
-import ru.jihor.mapper.registry.SimpleRegistry;
+import ru.jihor.mapper.registries.ClassPair;
+import ru.jihor.mapper.registries.ConfigurableConverterRegistry;
+import ru.jihor.mapper.registries.ConverterRegistry;
+import ru.jihor.mapper.registries.SimpleRegistry;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.CardA;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.LoanA;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.PersonA;
@@ -17,7 +17,7 @@ import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemB.Perso
  */
 public class DemoConverterRegistry extends ConfigurableConverterRegistry {
 
-    // We'll be calling this registry from multiple converters so
+    // We'll be calling this registries from multiple converters so
     // let's implement it as a singleton even though it's not mandated by the superclass,
     public final static DemoConverterRegistry instance = new DemoConverterRegistry();
 

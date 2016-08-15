@@ -1,6 +1,6 @@
 package ru.jihor.mapper.steps;
 
-import ru.jihor.mapper.base.Visitor;
+import ru.jihor.mapper.visitors.Visitor;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;

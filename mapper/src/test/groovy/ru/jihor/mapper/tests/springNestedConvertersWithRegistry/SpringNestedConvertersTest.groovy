@@ -4,7 +4,7 @@ import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import ru.jihor.mapper.exceptions.TransformationException
-import ru.jihor.mapper.registry.QueryableConverterRegistry
+import ru.jihor.mapper.registries.QueryableConverterRegistry
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.config.TestConfiguration
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.CreditCardA
 import ru.jihor.mapper.tests.springNestedConvertersWithRegistry.entities.systemA.DebitCardA

@@ -2,10 +2,11 @@ package ru.jihor.mapper.tests.registryQueries.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.jihor.mapper.base.Converter;
-import ru.jihor.mapper.registry.ClassPair;
-import ru.jihor.mapper.registry.QueryableConverterRegistry;
-import ru.jihor.mapper.registry.SimpleRegistry;
+import ru.jihor.mapper.Converters;
+import ru.jihor.mapper.converters.Converter;
+import ru.jihor.mapper.registries.ClassPair;
+import ru.jihor.mapper.registries.QueryableConverterRegistry;
+import ru.jihor.mapper.registries.SimpleRegistry;
 import ru.jihor.mapper.tests.registryQueries.entities.systemA.CardA;
 import ru.jihor.mapper.tests.registryQueries.entities.systemB.CardB;
 import ru.jihor.mapper.tests.registryQueries.entities.systemB.CreditCardB;
@@ -21,7 +22,7 @@ public class TestConfiguration {
 
     @Bean
     public Converter<CardA, CardB> cardConverter() {
-        return Converter.<CardA, CardB>builder()
+        return Converters.<CardA, CardB>builder()
                 .initializeTarget(CreditCardB::new)
                 .step("Copy card number", (a, b) -> b.setCardNumber(new BigInteger(a.getNumber())))
                 .step("Copy validity date",

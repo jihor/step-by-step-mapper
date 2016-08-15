@@ -1,6 +1,6 @@
-package ru.jihor.mapper.registry;
+package ru.jihor.mapper.registries;
 
-import ru.jihor.mapper.base.Converter;
+import ru.jihor.mapper.converters.Converter;
 
 import java.util.Map;
 

@@ -1,7 +1,7 @@
-package ru.jihor.mapper.registry;
+package ru.jihor.mapper.registries;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.jihor.mapper.base.Converter;
+import ru.jihor.mapper.converters.Converter;
 import ru.jihor.mapper.exceptions.RegistryException;
 
 import java.text.MessageFormat;

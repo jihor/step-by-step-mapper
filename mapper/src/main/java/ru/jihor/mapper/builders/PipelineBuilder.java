@@ -1,7 +1,7 @@
 package ru.jihor.mapper.builders;
 
-import ru.jihor.mapper.base.Pipeline;
-import ru.jihor.mapper.base.Step;
+import ru.jihor.mapper.pipeline.Pipeline;
+import ru.jihor.mapper.steps.Step;
 import ru.jihor.mapper.steps.CheckingTransformationStep;
 import ru.jihor.mapper.steps.TransformationStep;
 

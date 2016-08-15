@@ -2,7 +2,8 @@ package ru.jihor.mapper.tests.springSimpleConverter.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.jihor.mapper.base.Converter;
+import ru.jihor.mapper.Converters;
+import ru.jihor.mapper.converters.Converter;
 import ru.jihor.mapper.tests.springSimpleConverter.dictionaries.SimpleDictionary;
 import ru.jihor.mapper.tests.springSimpleConverter.entities.Error;
 import ru.jihor.mapper.tests.springSimpleConverter.entities.SampleSource;
@@ -17,7 +18,7 @@ import ru.jihor.mapper.visitors.ExceptionAggregatingVisitor;
 public class TestConfiguration {
     @Bean
     public Converter<SampleSource, SampleTarget> simpleConverter() {
-        return Converter
+        return Converters
                 .<SampleSource, SampleTarget>builder()
                 .initializeTarget(SampleTarget::new)
                 .switchCase("Check errorCode")

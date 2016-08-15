@@ -28,7 +28,7 @@ Some implementation of the SLF4J API must be provided at runtime.
 
 ### API Description
 #### Converter
-**Converter** is the main class for mapping definitions. It holds a pipeline of commands (or steps, hence the name 'step-by-step mapper'). The following commands are available:
+**Converter** is the main interface for mapping definitions. It holds a pipeline of commands (or steps, hence the name 'step-by-step mapper'). The following commands are available:
 
 * `initializeTarget()` - always the first command in pipeline, this is a special step for target object initialization. Initializer provided here will be used to initialize the target object when the `convert()` function is called without argument providing an instance of if (i.e. without a `Supplier<TargetType>` or an instance of `TargetType`)
  
@@ -91,7 +91,7 @@ public class MyConverter extends DelegatingConverter<Source, Target> {
 
     @Override
     protected Converter<Source, Target> configureDelegate() {
-        return Converter
+        return Converters
                 .<Source, Target>builder()
                 .initializeTarget(SampleTarget::new)
                 .step("Map data", (src, target) -> ...)
@@ -144,7 +144,7 @@ In Spring context, Converter is most easily defined with a plain builder method:
 ```
 @Bean
 public Converter<Source, Target> simpleConverter() {
-    return Converter
+    return Converters
             .<Source, Target>builder()
             .initializeTarget(SampleTarget::new)
             .step("Map data", (src, target) -> ...)

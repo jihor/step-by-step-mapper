@@ -1,8 +1,9 @@
 package ru.jihor.mapper.tests.nestedConvertersWithRegistry.converters;
 
-import ru.jihor.mapper.base.Converter;
-import ru.jihor.mapper.base.DelegatingConverter;
-import ru.jihor.mapper.registry.ConverterRegistry;
+import ru.jihor.mapper.Converters;
+import ru.jihor.mapper.converters.Converter;
+import ru.jihor.mapper.converters.DelegatingConverter;
+import ru.jihor.mapper.registries.ConverterRegistry;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.CardA;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.LoanA;
 import ru.jihor.mapper.tests.nestedConvertersWithRegistry.entities.systemA.PersonA;
@@ -20,7 +21,7 @@ public class PersonAToPersonBConverter extends DelegatingConverter<PersonA, Pers
 
     @Override
     protected Converter<PersonA, PersonB> configureDelegate() {
-        return Converter
+        return Converters
                 .<PersonA, PersonB>builder()
                 .initializeTarget(PersonB::new)
                 .step("Copy full name", (a, b) -> {

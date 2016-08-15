@@ -1,6 +1,7 @@
-package ru.jihor.mapper.base;
+package ru.jihor.mapper.pipeline;
 
 import lombok.extern.slf4j.Slf4j;
+import ru.jihor.mapper.steps.Step;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;

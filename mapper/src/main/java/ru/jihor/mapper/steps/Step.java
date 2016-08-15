@@ -1,4 +1,6 @@
-package ru.jihor.mapper.base;
+package ru.jihor.mapper.steps;
+
+import ru.jihor.mapper.visitors.Visitor;
 
 /**
  *

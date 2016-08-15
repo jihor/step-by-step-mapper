@@ -1,8 +1,8 @@
 package ru.jihor.mapper.builders;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.jihor.mapper.base.Converter;
-import ru.jihor.mapper.base.Visitor;
+import ru.jihor.mapper.converters.Converter;
+import ru.jihor.mapper.visitors.Visitor;
 
 import java.util.function.Supplier;
 

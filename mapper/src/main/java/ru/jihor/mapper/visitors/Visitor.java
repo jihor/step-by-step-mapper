@@ -1,5 +1,6 @@
-package ru.jihor.mapper.base;
+package ru.jihor.mapper.visitors;
 
+import ru.jihor.mapper.pipeline.Pipeline;
 import ru.jihor.mapper.steps.CheckingTransformationStep;
 import ru.jihor.mapper.steps.SwitchCaseStep;
 import ru.jihor.mapper.steps.TransformationStep;

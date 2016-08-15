@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ru.jihor.mapper.base.Converter;
+import ru.jihor.mapper.Converters;
+import ru.jihor.mapper.converters.Converter;
 import ru.jihor.mapper.exceptions.RegistryException;
-import ru.jihor.mapper.registry.ClassPair;
-import ru.jihor.mapper.registry.QueryableConverterRegistry;
+import ru.jihor.mapper.registries.ClassPair;
+import ru.jihor.mapper.registries.QueryableConverterRegistry;
 import ru.jihor.mapper.tests.registryQueries.config.TestConfiguration;
 import ru.jihor.mapper.tests.registryQueries.entities.systemA.CardA;
 import ru.jihor.mapper.tests.registryQueries.entities.systemA.CreditCardA;
@@ -87,12 +88,12 @@ public class RegistryQueriesJUnitTest extends TestCase {
     @DirtiesContext
     public void testDynamicConverterAddition() {
         // we already have a converter named for [CardA.class, CardB.class] pair,
-        // so the registry will map [? extends CardA] to [CardB], but not [? extends CardA] to [CreditCardB]
+        // so the registries will map [? extends CardA] to [CardB], but not [? extends CardA] to [CreditCardB]
         registry.add(ClassPair.of(CardA.class, CreditCardB.class), "otherCardConverter",
-                     Converter.<CardA, CreditCardB>builder().initializeTarget(CreditCardB::new)
-                                                            .step("Copy card number",
+                     Converters.<CardA, CreditCardB>builder().initializeTarget(CreditCardB::new)
+                                                                 .step("Copy card number",
                                                                   (a, b) -> b.setCardNumber(new BigInteger(a.getNumber())))
-                                                            .step("Copy validity date",
+                                                                 .step("Copy validity date",
                                                                   (a) -> !(a.getValidThru().matches("\\d{2}/\\d{4}")) ?
                                                                           "Expected MM/YYYY format, found [" + a.getValidThru() + "]" :
                                                                           null,
@@ -101,9 +102,9 @@ public class RegistryQueriesJUnitTest extends TestCase {
                                                                       b.setValidThruMonth(Integer.valueOf(a.getValidThru()
                                                                                                            .substring(0, 2)));
                                                                   })
-                                                            .step("Copy cardholder name", (a, b) -> b.setCardholderName(a.getHolderName()))
-                                                            .end()
-                                                            .build());
+                                                                 .step("Copy cardholder name", (a, b) -> b.setCardholderName(a.getHolderName()))
+                                                                 .end()
+                                                                 .build());
         final CreditCardB cardB1 = registry.convert(a1).to(CreditCardB::new);
         final CreditCardB cardB2 = registry.convert(a1).to(new CreditCardB());
         final CreditCardB cardB3 = registry.convert(a1).to(CreditCardB.class);
