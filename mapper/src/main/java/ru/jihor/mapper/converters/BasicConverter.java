@@ -39,7 +39,7 @@ public class BasicConverter<S, T> implements Converter<S, T> {
 
     private void doConvert(S source, T target) {
         if (pipeline == null) {
-            throw new TransformationException("System", "Pipeline not set");
+            throw new TransformationException("System", "Pipeline is not set");
         }
         Visitor<S, T> visitor = getVisitorSupplier().get();
         visitor.setSource(source);
