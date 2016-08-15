@@ -169,7 +169,7 @@ public Converter<Source, Target> simpleConverter() {
 }
 ```
 ###### Registry
-Registry is also most easily defined as an anonymous class (it's a shame abstract classes can't be implemented as labdas ;) ):
+Registry is also most easily defined as an anonymous class (it's a shame abstract classes can't be implemented as lambdas ;) ):
 ```
 @Bean
 public QueryableConverterRegistry registry() {
