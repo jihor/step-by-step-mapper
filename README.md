@@ -30,7 +30,7 @@ Some implementation of the SLF4J API must be provided at runtime.
 #### Converter
 **Converter** is the main interface for mapping definitions. It holds a pipeline of commands (or steps, hence the name 'step-by-step mapper'). The following commands are available:
 
-* `initializeTarget()` - always the first command in pipeline, this is a special step for target object initialization. Initializer provided here will be used to initialize the target object when the `convert()` function is called without argument providing an instance of if (i.e. without a `Supplier<TargetType>` or an instance of `TargetType`)
+* `initializeTarget()` - always the first command in pipeline, this is a special step for target object initialization. Initializer provided here will be used to initialize the target object when the `convert()` function is called without argument providing an instance of it (i.e. without a `Supplier<TargetType>` or an instance of `TargetType`)
  
     Attributes:
     - targetInitializer: `Supplier<TargetType>`
