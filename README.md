@@ -120,8 +120,7 @@ Registry can be implemented as follows:
 ```
 public class DemoConverterRegistry extends ConfigurableConverterRegistry {
 
-    // We'll be calling this registry from multiple converters so 
-    // let's implement it as a singleton even though it's not mandated by the superclass, 
+    // It's a reasonable thing to implement the registry as a singleton
     public final static DemoConverterRegistry instance = new DemoConverterRegistry(); 
 
     public static ConverterRegistry getInstance() {
