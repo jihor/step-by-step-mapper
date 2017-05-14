@@ -51,12 +51,12 @@ Some implementation of the SLF4J API must be provided at runtime.
     - check body: `Function<SourceType, String>` (if the check returns anything but null or throws an exception, the step is considered faulted and the whole pipeline is aborted)
     - transformation body: `BiConsumer<SourceType, TargetType>`
 
-* `switchCase().when()...[.when()...][.otherwise()...].endSwitch()` - conditional steps. These steps start a nested transformation pipelines which must be terminated by an `end()` command
+* `switchCase().when()...[.when()...][.otherwise()...].endSwitch()` - conditional steps. These steps form a nested transformation pipeline which must be terminated by an `end()` command
 
     Attributes:
     
     for `switchCase()`:
-    - name: `String` (must be unique among the commands in the pipeline)
+    - name: `String` (must be unique among the commands in the nested pipeline)
     
     for `when()`:
     - condition: `Predicate<SourceType>`
